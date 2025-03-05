@@ -159,6 +159,11 @@
 <li class="toctree-l2"><a class="reference internal" href="manual/get_in_touch.html">Get in touch</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="examples/index.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">JaxILI</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/nle_quickstart.html">Neural Likelihood Estimation Quickstart</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="user_guide/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="user_guide/how_jaxili_work.html">How <code class="docutils literal notranslate"><span class="pre">JaxILI</span></code> works</a></li>
 </ul>
@@ -364,8 +369,27 @@ document.write(`
 <li class="toctree-l4"><a class="reference internal" href="jaxili.loss.html#jaxili.loss.mmd_summary_space"><code class="docutils literal notranslate"><span class="pre">mmd_summary_space()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="jaxili.model.html">jaxili.model module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxili.train.html">jaxili.train module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.model.html">jaxili.model module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxili.model.html#jaxili.model.AffineCoupling"><code class="docutils literal notranslate"><span class="pre">AffineCoupling</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxili.model.html#jaxili.model.Compressor_w_NDE"><code class="docutils literal notranslate"><span class="pre">Compressor_w_NDE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxili.model.html#jaxili.model.ConditionalMADE"><code class="docutils literal notranslate"><span class="pre">ConditionalMADE</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxili.model.html#jaxili.model.ConditionalMAF"><code class="docutils literal notranslate"><span class="pre">ConditionalMAF</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxili.model.html#jaxili.model.ConditionalRealNVP"><code class="docutils literal notranslate"><span class="pre">ConditionalRealNVP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxili.model.html#jaxili.model.Identity"><code class="docutils literal notranslate"><span class="pre">Identity</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxili.model.html#jaxili.model.MAFLayer"><code class="docutils literal notranslate"><span class="pre">MAFLayer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxili.model.html#jaxili.model.MaskedLinear"><code class="docutils literal notranslate"><span class="pre">MaskedLinear</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxili.model.html#jaxili.model.MixtureDensityNetwork"><code class="docutils literal notranslate"><span class="pre">MixtureDensityNetwork</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxili.model.html#jaxili.model.NDENetwork"><code class="docutils literal notranslate"><span class="pre">NDENetwork</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxili.model.html#jaxili.model.NDE_Compressor"><code class="docutils literal notranslate"><span class="pre">NDE_Compressor</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxili.model.html#jaxili.model.NDE_w_Standardization"><code class="docutils literal notranslate"><span class="pre">NDE_w_Standardization</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxili.model.html#jaxili.model.Standardizer"><code class="docutils literal notranslate"><span class="pre">Standardizer</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.train.html">jaxili.train module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jaxili.train.html#jaxili.train.TrainState"><code class="docutils literal notranslate"><span class="pre">TrainState</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="jaxili.train.html#jaxili.train.TrainerModule"><code class="docutils literal notranslate"><span class="pre">TrainerModule</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="jaxili.utils.html">jaxili.utils module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="jaxili.utils.html#jaxili.utils.check_density_estimator"><code class="docutils literal notranslate"><span class="pre">check_density_estimator()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="jaxili.utils.html#jaxili.utils.check_hparams_maf"><code class="docutils literal notranslate"><span class="pre">check_hparams_maf()</span></code></a></li>

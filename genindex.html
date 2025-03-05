@@ -158,6 +158,11 @@
 <li class="toctree-l2"><a class="reference internal" href="manual/get_in_touch.html">Get in touch</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="examples/index.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">JaxILI</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/nle_quickstart.html">Neural Likelihood Estimation Quickstart</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="user_guide/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="user_guide/how_jaxili_work.html">How <code class="docutils literal notranslate"><span class="pre">JaxILI</span></code> works</a></li>
 </ul>
@@ -288,17 +293,26 @@ document.write(`
 
 <div class="genindex-jumpbox">
  <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
  | <a href="#J"><strong>J</strong></a>
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
  | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
+ | <a href="#Y"><strong>Y</strong></a>
  
 </div>
 <h2 id="A">A</h2>
@@ -308,6 +322,54 @@ document.write(`
 
       <ul>
         <li><a href="jaxili.compressor.html#jaxili.compressor.MLPCompressor.activation">(jaxili.compressor.MLPCompressor attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.AffineCoupling.activation">(jaxili.model.AffineCoupling attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalMADE.activation">(jaxili.model.ConditionalMADE attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalMAF.activation">(jaxili.model.ConditionalMAF attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalRealNVP.activation">(jaxili.model.ConditionalRealNVP attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.MAFLayer.activation">(jaxili.model.MAFLayer attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.MixtureDensityNetwork.activation">(jaxili.model.MixtureDensityNetwork attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.model.html#jaxili.model.AffineCoupling">AffineCoupling (class in jaxili.model)</a>
+</li>
+      <li><a href="jaxili.inference.nle.html#jaxili.inference.nle.NLE.append_simulations">append_simulations() (jaxili.inference.nle.NLE method)</a>
+
+      <ul>
+        <li><a href="jaxili.inference.npe.html#jaxili.inference.npe.NPE.append_simulations">(jaxili.inference.npe.NPE method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.model.html#jaxili.model.ConditionalMAF.backward">backward() (jaxili.model.ConditionalMAF method)</a>
+
+      <ul>
+        <li><a href="jaxili.model.html#jaxili.model.MAFLayer.backward">(jaxili.model.MAFLayer method)</a>
+</li>
+      </ul></li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainState.batch_stats">batch_stats (jaxili.train.TrainState attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.model.html#jaxili.model.MaskedLinear.bias">bias (jaxili.model.MaskedLinear attribute)</a>
+</li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.bind_model">bind_model() (jaxili.train.TrainerModule method)</a>
+</li>
+      <li><a href="jaxili.inference.nle.html#jaxili.inference.nle.NLE.build_posterior">build_posterior() (jaxili.inference.nle.NLE method)</a>
+
+      <ul>
+        <li><a href="jaxili.inference.npe.html#jaxili.inference.npe.NPE.build_posterior">(jaxili.inference.npe.NPE method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -322,13 +384,67 @@ document.write(`
 </li>
       <li><a href="jaxili.utils.html#jaxili.utils.check_hparams_mdn">check_hparams_mdn() (in module jaxili.utils)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="jaxili.utils.html#jaxili.utils.check_hparams_realnvp">check_hparams_realnvp() (in module jaxili.utils)</a>
 </li>
       <li><a href="jaxili.compressor.html#jaxili.compressor.CNN2DCompressor">CNN2DCompressor (class in jaxili.compressor)</a>
 </li>
+      <li><a href="jaxili.model.html#jaxili.model.Compressor_w_NDE.compress">compress() (jaxili.model.Compressor_w_NDE method)</a>
+</li>
+      <li><a href="jaxili.model.html#jaxili.model.NDE_Compressor.compressor">compressor (jaxili.model.NDE_Compressor attribute)</a>
+</li>
+      <li><a href="jaxili.model.html#jaxili.model.NDE_Compressor.compressor_hparams">compressor_hparams (jaxili.model.NDE_Compressor attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.model.html#jaxili.model.Compressor_w_NDE">Compressor_w_NDE (class in jaxili.model)</a>
+</li>
+      <li><a href="jaxili.model.html#jaxili.model.ConditionalMADE">ConditionalMADE (class in jaxili.model)</a>
+</li>
+      <li><a href="jaxili.model.html#jaxili.model.ConditionalMAF">ConditionalMAF (class in jaxili.model)</a>
+</li>
+      <li><a href="jaxili.model.html#jaxili.model.ConditionalRealNVP">ConditionalRealNVP (class in jaxili.model)</a>
+</li>
       <li><a href="jaxili.utils.html#jaxili.utils.create_data_loader">create_data_loader() (in module jaxili.utils)</a>
+</li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.create_functions">create_functions() (jaxili.train.TrainerModule method)</a>
+</li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.create_jitted_functions">create_jitted_functions() (jaxili.train.TrainerModule method)</a>
+</li>
+      <li><a href="jaxili.inference.nle.html#jaxili.inference.nle.NLE.create_trainer">create_trainer() (jaxili.inference.nle.NLE method)</a>
+
+      <ul>
+        <li><a href="jaxili.inference.npe.html#jaxili.inference.npe.NPE.create_trainer">(jaxili.inference.npe.NPE method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.posterior.direct_posterior.html#jaxili.posterior.direct_posterior.DirectPosterior">DirectPosterior (class in jaxili.posterior.direct_posterior)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.model.html#jaxili.model.NDE_w_Standardization.embedding">embedding() (jaxili.model.NDE_w_Standardization method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.model.html#jaxili.model.NDE_w_Standardization.embedding_net">embedding_net (jaxili.model.NDE_w_Standardization attribute)</a>
+</li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.eval_model">eval_model() (jaxili.train.TrainerModule method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.model.html#jaxili.model.MAFLayer.forward">forward() (jaxili.model.MAFLayer method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -336,7 +452,13 @@ document.write(`
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.model.html#jaxili.model.ConditionalMADE.gaussian">gaussian (jaxili.model.ConditionalMADE attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="jaxili.loss.html#jaxili.loss.gaussian_kernel_matrix">gaussian_kernel_matrix() (in module jaxili.loss)</a>
+</li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.generate_config">generate_config() (jaxili.train.TrainerModule method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -346,9 +468,37 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="jaxili.utils.html#jaxili.utils.handle_non_serializable">handle_non_serializable() (in module jaxili.utils)</a>
 </li>
+      <li><a href="jaxili.model.html#jaxili.model.ConditionalMADE.hidden_dims">hidden_dims (jaxili.model.ConditionalMADE attribute)</a>
+
+      <ul>
+        <li><a href="jaxili.model.html#jaxili.model.MAFLayer.hidden_dims">(jaxili.model.MAFLayer attribute)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="jaxili.compressor.html#jaxili.compressor.MLPCompressor.hidden_size">hidden_size (jaxili.compressor.MLPCompressor attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.model.html#jaxili.model.Identity">Identity (class in jaxili.model)</a>
+</li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.init_apply_fn">init_apply_fn() (jaxili.train.TrainerModule method)</a>
+</li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.init_logger">init_logger() (jaxili.train.TrainerModule method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.init_model">init_model() (jaxili.train.TrainerModule method)</a>
+</li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.init_optimizer">init_optimizer() (jaxili.train.TrainerModule method)</a>
+</li>
+      <li><a href="jaxili.model.html#jaxili.model.MaskedLinear.initialize_mask">initialize_mask() (jaxili.model.MaskedLinear method)</a>
+</li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.is_new_model_better">is_new_model_better() (jaxili.train.TrainerModule method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -371,14 +521,77 @@ document.write(`
 </li>
       </ul></li>
       <li>
+    jaxili.inference
+
+      <ul>
+        <li><a href="jaxili.inference.html#module-jaxili.inference">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxili.inference.nle
+
+      <ul>
+        <li><a href="jaxili.inference.nle.html#module-jaxili.inference.nle">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxili.inference.npe
+
+      <ul>
+        <li><a href="jaxili.inference.npe.html#module-jaxili.inference.npe">module</a>
+</li>
+      </ul></li>
+      <li>
     jaxili.loss
 
       <ul>
         <li><a href="jaxili.loss.html#module-jaxili.loss">module</a>
 </li>
       </ul></li>
+      <li>
+    jaxili.model
+
+      <ul>
+        <li><a href="jaxili.model.html#module-jaxili.model">module</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    jaxili.posterior
+
+      <ul>
+        <li><a href="jaxili.posterior.html#module-jaxili.posterior">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxili.posterior.base_posterior
+
+      <ul>
+        <li><a href="jaxili.posterior.base_posterior.html#module-jaxili.posterior.base_posterior">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxili.posterior.direct_posterior
+
+      <ul>
+        <li><a href="jaxili.posterior.direct_posterior.html#module-jaxili.posterior.direct_posterior">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxili.posterior.mcmc_posterior
+
+      <ul>
+        <li><a href="jaxili.posterior.mcmc_posterior.html#module-jaxili.posterior.mcmc_posterior">module</a>
+</li>
+      </ul></li>
+      <li>
+    jaxili.train
+
+      <ul>
+        <li><a href="jaxili.train.html#module-jaxili.train">module</a>
+</li>
+      </ul></li>
       <li>
     jaxili.utils
 
@@ -399,10 +612,48 @@ document.write(`
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="jaxili.loss.html#jaxili.loss.loss_mmd_npe">loss_mmd_npe() (in module jaxili.loss)</a>
+      <li><a href="jaxili.model.html#jaxili.model.AffineCoupling.layers">layers (jaxili.model.AffineCoupling attribute)</a>
+
+      <ul>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalMAF.layers">(jaxili.model.ConditionalMAF attribute)</a>
 </li>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalRealNVP.layers">(jaxili.model.ConditionalRealNVP attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.MixtureDensityNetwork.layers">(jaxili.model.MixtureDensityNetwork attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.load_from_checkpoints">load_from_checkpoints() (jaxili.train.TrainerModule class method)</a>
+</li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.load_model">load_model() (jaxili.train.TrainerModule method)</a>
+</li>
+      <li><a href="jaxili.posterior.mcmc_posterior.html#jaxili.posterior.mcmc_posterior.MCMCPosterior.log_likelihood">log_likelihood() (jaxili.posterior.mcmc_posterior.MCMCPosterior method)</a>
+</li>
+      <li><a href="jaxili.posterior.mcmc_posterior.html#jaxili.posterior.mcmc_posterior.MCMCPosterior.log_prior">log_prior() (jaxili.posterior.mcmc_posterior.MCMCPosterior method)</a>
+</li>
+      <li><a href="jaxili.model.html#jaxili.model.Compressor_w_NDE.log_prob">log_prob() (jaxili.model.Compressor_w_NDE method)</a>
+
+      <ul>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalMAF.log_prob">(jaxili.model.ConditionalMAF method)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalRealNVP.log_prob">(jaxili.model.ConditionalRealNVP method)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.MixtureDensityNetwork.log_prob">(jaxili.model.MixtureDensityNetwork method)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.NDE_Compressor.log_prob">(jaxili.model.NDE_Compressor method)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.NDE_w_Standardization.log_prob">(jaxili.model.NDE_w_Standardization method)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.NDENetwork.log_prob">(jaxili.model.NDENetwork method)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.model.html#jaxili.model.NDE_Compressor.log_prob_compressed">log_prob_compressed() (jaxili.model.NDE_Compressor method)</a>
+</li>
+      <li><a href="jaxili.model.html#jaxili.model.Compressor_w_NDE.log_prob_from_compressed">log_prob_from_compressed() (jaxili.model.Compressor_w_NDE method)</a>
+</li>
+      <li><a href="jaxili.loss.html#jaxili.loss.loss_mmd_npe">loss_mmd_npe() (in module jaxili.loss)</a>
+</li>
       <li><a href="jaxili.loss.html#jaxili.loss.loss_nll_nle">loss_nll_nle() (in module jaxili.loss)</a>
 </li>
       <li><a href="jaxili.loss.html#jaxili.loss.loss_nll_npe">loss_nll_npe() (in module jaxili.loss)</a>
@@ -413,7 +664,19 @@ document.write(`
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.model.html#jaxili.model.MAFLayer">MAFLayer (class in jaxili.model)</a>
+</li>
+      <li><a href="jaxili.model.html#jaxili.model.MaskedLinear.mask">mask (jaxili.model.MaskedLinear attribute)</a>
+</li>
+      <li><a href="jaxili.model.html#jaxili.model.MaskedLinear">MaskedLinear (class in jaxili.model)</a>
+</li>
       <li><a href="jaxili.loss.html#jaxili.loss.maximum_mean_discrepancy">maximum_mean_discrepancy() (in module jaxili.loss)</a>
+</li>
+      <li><a href="jaxili.posterior.mcmc_posterior.html#jaxili.posterior.mcmc_posterior.MCMCPosterior">MCMCPosterior (class in jaxili.posterior.mcmc_posterior)</a>
+</li>
+      <li><a href="jaxili.model.html#jaxili.model.Standardizer.mean">mean (jaxili.model.Standardizer attribute)</a>
+</li>
+      <li><a href="jaxili.model.html#jaxili.model.MixtureDensityNetwork">MixtureDensityNetwork (class in jaxili.model)</a>
 </li>
       <li><a href="jaxili.compressor.html#jaxili.compressor.MLPCompressor">MLPCompressor (class in jaxili.compressor)</a>
 </li>
@@ -429,7 +692,25 @@ document.write(`
 </li>
         <li><a href="jaxili.compressor.html#module-jaxili.compressor">jaxili.compressor</a>
 </li>
+        <li><a href="jaxili.inference.html#module-jaxili.inference">jaxili.inference</a>
+</li>
+        <li><a href="jaxili.inference.nle.html#module-jaxili.inference.nle">jaxili.inference.nle</a>
+</li>
+        <li><a href="jaxili.inference.npe.html#module-jaxili.inference.npe">jaxili.inference.npe</a>
+</li>
         <li><a href="jaxili.loss.html#module-jaxili.loss">jaxili.loss</a>
+</li>
+        <li><a href="jaxili.model.html#module-jaxili.model">jaxili.model</a>
+</li>
+        <li><a href="jaxili.posterior.html#module-jaxili.posterior">jaxili.posterior</a>
+</li>
+        <li><a href="jaxili.posterior.base_posterior.html#module-jaxili.posterior.base_posterior">jaxili.posterior.base_posterior</a>
+</li>
+        <li><a href="jaxili.posterior.direct_posterior.html#module-jaxili.posterior.direct_posterior">jaxili.posterior.direct_posterior</a>
+</li>
+        <li><a href="jaxili.posterior.mcmc_posterior.html#module-jaxili.posterior.mcmc_posterior">jaxili.posterior.mcmc_posterior</a>
+</li>
+        <li><a href="jaxili.train.html#module-jaxili.train">jaxili.train</a>
 </li>
         <li><a href="jaxili.utils.html#module-jaxili.utils">jaxili.utils</a>
 </li>
@@ -442,18 +723,108 @@ document.write(`
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.model.html#jaxili.model.MixtureDensityNetwork.n_components">n_components (jaxili.model.MixtureDensityNetwork attribute)</a>
+</li>
+      <li><a href="jaxili.model.html#jaxili.model.ConditionalMADE.n_cond">n_cond (jaxili.model.ConditionalMADE attribute)</a>
+
+      <ul>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalMAF.n_cond">(jaxili.model.ConditionalMAF attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalRealNVP.n_cond">(jaxili.model.ConditionalRealNVP attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.MAFLayer.n_cond">(jaxili.model.MAFLayer attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.MixtureDensityNetwork.n_cond">(jaxili.model.MixtureDensityNetwork attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="jaxili.model.html#jaxili.model.ConditionalMADE.n_in">n_in (jaxili.model.ConditionalMADE attribute)</a>
+
+      <ul>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalMAF.n_in">(jaxili.model.ConditionalMAF attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalRealNVP.n_in">(jaxili.model.ConditionalRealNVP attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.MAFLayer.n_in">(jaxili.model.MAFLayer attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.MixtureDensityNetwork.n_in">(jaxili.model.MixtureDensityNetwork attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="jaxili.model.html#jaxili.model.ConditionalMAF.n_layers">n_layers (jaxili.model.ConditionalMAF attribute)</a>
+
+      <ul>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalRealNVP.n_layers">(jaxili.model.ConditionalRealNVP attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="jaxili.model.html#jaxili.model.MaskedLinear.n_out">n_out (jaxili.model.MaskedLinear attribute)</a>
+</li>
       <li><a href="jaxili.compressor.html#jaxili.compressor.CNN2DCompressor.name">name (jaxili.compressor.CNN2DCompressor attribute)</a>
 
       <ul>
         <li><a href="jaxili.compressor.html#jaxili.compressor.MLPCompressor.name">(jaxili.compressor.MLPCompressor attribute)</a>
 </li>
+        <li><a href="jaxili.model.html#jaxili.model.AffineCoupling.name">(jaxili.model.AffineCoupling attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.Compressor_w_NDE.name">(jaxili.model.Compressor_w_NDE attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalMADE.name">(jaxili.model.ConditionalMADE attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalMAF.name">(jaxili.model.ConditionalMAF attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalRealNVP.name">(jaxili.model.ConditionalRealNVP attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.Identity.name">(jaxili.model.Identity attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.MAFLayer.name">(jaxili.model.MAFLayer attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.MaskedLinear.name">(jaxili.model.MaskedLinear attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.MixtureDensityNetwork.name">(jaxili.model.MixtureDensityNetwork attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.NDE_Compressor.name">(jaxili.model.NDE_Compressor attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.NDE_w_Standardization.name">(jaxili.model.NDE_w_Standardization attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.NDENetwork.name">(jaxili.model.NDENetwork attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.Standardizer.name">(jaxili.model.Standardizer attribute)</a>
+</li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.model.html#jaxili.model.NDE_Compressor.nde">nde (jaxili.model.NDE_Compressor attribute)</a>
+
+      <ul>
+        <li><a href="jaxili.model.html#jaxili.model.NDE_w_Standardization.nde">(jaxili.model.NDE_w_Standardization attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="jaxili.model.html#jaxili.model.NDE_Compressor">NDE_Compressor (class in jaxili.model)</a>
+</li>
+      <li><a href="jaxili.model.html#jaxili.model.NDE_Compressor.nde_hparams">nde_hparams (jaxili.model.NDE_Compressor attribute)</a>
+</li>
+      <li><a href="jaxili.model.html#jaxili.model.NDE_w_Standardization">NDE_w_Standardization (class in jaxili.model)</a>
+</li>
+      <li><a href="jaxili.model.html#jaxili.model.NDENetwork">NDENetwork (class in jaxili.model)</a>
+</li>
+      <li><a href="jaxili.posterior.base_posterior.html#jaxili.posterior.base_posterior.NeuralPosterior">NeuralPosterior (class in jaxili.posterior.base_posterior)</a>
+</li>
+      <li><a href="jaxili.inference.nle.html#jaxili.inference.nle.NLE">NLE (class in jaxili.inference.nle)</a>
+</li>
+      <li><a href="jaxili.inference.npe.html#jaxili.inference.npe.NPE">NPE (class in jaxili.inference.npe)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.on_training_epoch_end">on_training_epoch_end() (jaxili.train.TrainerModule method)</a>
+</li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.on_training_start">on_training_start() (jaxili.train.TrainerModule method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.on_validation_epoch_end">on_validation_epoch_end() (jaxili.train.TrainerModule method)</a>
+</li>
       <li><a href="jaxili.compressor.html#jaxili.compressor.CNN2DCompressor.output_size">output_size (jaxili.compressor.CNN2DCompressor attribute)</a>
 
       <ul>
@@ -471,19 +842,227 @@ document.write(`
       <ul>
         <li><a href="jaxili.compressor.html#jaxili.compressor.MLPCompressor.parent">(jaxili.compressor.MLPCompressor attribute)</a>
 </li>
+        <li><a href="jaxili.model.html#jaxili.model.AffineCoupling.parent">(jaxili.model.AffineCoupling attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.Compressor_w_NDE.parent">(jaxili.model.Compressor_w_NDE attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalMADE.parent">(jaxili.model.ConditionalMADE attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalMAF.parent">(jaxili.model.ConditionalMAF attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalRealNVP.parent">(jaxili.model.ConditionalRealNVP attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.Identity.parent">(jaxili.model.Identity attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.MAFLayer.parent">(jaxili.model.MAFLayer attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.MaskedLinear.parent">(jaxili.model.MaskedLinear attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.MixtureDensityNetwork.parent">(jaxili.model.MixtureDensityNetwork attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.NDE_Compressor.parent">(jaxili.model.NDE_Compressor attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.NDE_w_Standardization.parent">(jaxili.model.NDE_w_Standardization attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.NDENetwork.parent">(jaxili.model.NDENetwork attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.Standardizer.parent">(jaxili.model.Standardizer attribute)</a>
+</li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.posterior.mcmc_posterior.html#jaxili.posterior.mcmc_posterior.MCMCPosterior.print_implemented_methods">print_implemented_methods() (jaxili.posterior.mcmc_posterior.MCMCPosterior method)</a>
+</li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.print_tabulate">print_tabulate() (jaxili.train.TrainerModule method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.model.html#jaxili.model.ConditionalMADE.random_order">random_order (jaxili.model.ConditionalMADE attribute)</a>
+</li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainState.replace">replace() (jaxili.train.TrainState method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.model.html#jaxili.model.MAFLayer.reverse">reverse (jaxili.model.MAFLayer attribute)</a>
+</li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainState.rng">rng (jaxili.train.TrainState attribute)</a>
+</li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.run_model_init">run_model_init() (jaxili.train.TrainerModule method)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.model.html#jaxili.model.Compressor_w_NDE.sample">sample() (jaxili.model.Compressor_w_NDE method)</a>
+
+      <ul>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalMAF.sample">(jaxili.model.ConditionalMAF method)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalRealNVP.sample">(jaxili.model.ConditionalRealNVP method)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.MixtureDensityNetwork.sample">(jaxili.model.MixtureDensityNetwork method)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.NDE_Compressor.sample">(jaxili.model.NDE_Compressor method)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.NDE_w_Standardization.sample">(jaxili.model.NDE_w_Standardization method)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.NDENetwork.sample">(jaxili.model.NDENetwork method)</a>
+</li>
+        <li><a href="jaxili.posterior.base_posterior.html#jaxili.posterior.base_posterior.NeuralPosterior.sample">(jaxili.posterior.base_posterior.NeuralPosterior method)</a>
+</li>
+        <li><a href="jaxili.posterior.direct_posterior.html#jaxili.posterior.direct_posterior.DirectPosterior.sample">(jaxili.posterior.direct_posterior.DirectPosterior method)</a>
+</li>
+        <li><a href="jaxili.posterior.mcmc_posterior.html#jaxili.posterior.mcmc_posterior.MCMCPosterior.sample">(jaxili.posterior.mcmc_posterior.MCMCPosterior method)</a>
+</li>
+      </ul></li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.save_metrics">save_metrics() (jaxili.train.TrainerModule method)</a>
+</li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.save_model">save_model() (jaxili.train.TrainerModule method)</a>
+</li>
       <li><a href="jaxili.compressor.html#jaxili.compressor.CNN2DCompressor.scope">scope (jaxili.compressor.CNN2DCompressor attribute)</a>
 
       <ul>
         <li><a href="jaxili.compressor.html#jaxili.compressor.MLPCompressor.scope">(jaxili.compressor.MLPCompressor attribute)</a>
 </li>
+        <li><a href="jaxili.model.html#jaxili.model.AffineCoupling.scope">(jaxili.model.AffineCoupling attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.Compressor_w_NDE.scope">(jaxili.model.Compressor_w_NDE attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalMADE.scope">(jaxili.model.ConditionalMADE attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalMAF.scope">(jaxili.model.ConditionalMAF attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalRealNVP.scope">(jaxili.model.ConditionalRealNVP attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.Identity.scope">(jaxili.model.Identity attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.MAFLayer.scope">(jaxili.model.MAFLayer attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.MaskedLinear.scope">(jaxili.model.MaskedLinear attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.MixtureDensityNetwork.scope">(jaxili.model.MixtureDensityNetwork attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.NDE_Compressor.scope">(jaxili.model.NDE_Compressor attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.NDE_w_Standardization.scope">(jaxili.model.NDE_w_Standardization attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.NDENetwork.scope">(jaxili.model.NDENetwork attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.Standardizer.scope">(jaxili.model.Standardizer attribute)</a>
+</li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.model.html#jaxili.model.ConditionalMADE.seed">seed (jaxili.model.ConditionalMADE attribute)</a>
+
+      <ul>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalMAF.seed">(jaxili.model.ConditionalMAF attribute)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.MAFLayer.seed">(jaxili.model.MAFLayer attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="jaxili.inference.nle.html#jaxili.inference.nle.NLE.set_dataloader">set_dataloader() (jaxili.inference.nle.NLE method)</a>
+
+      <ul>
+        <li><a href="jaxili.inference.npe.html#jaxili.inference.npe.NPE.set_dataloader">(jaxili.inference.npe.NPE method)</a>
+</li>
+      </ul></li>
+      <li><a href="jaxili.inference.nle.html#jaxili.inference.nle.NLE.set_dataset">set_dataset() (jaxili.inference.nle.NLE method)</a>
+
+      <ul>
+        <li><a href="jaxili.inference.npe.html#jaxili.inference.npe.NPE.set_dataset">(jaxili.inference.npe.NPE method)</a>
+</li>
+      </ul></li>
+      <li><a href="jaxili.posterior.base_posterior.html#jaxili.posterior.base_posterior.NeuralPosterior.set_default_x">set_default_x() (jaxili.posterior.base_posterior.NeuralPosterior method)</a>
+
+      <ul>
+        <li><a href="jaxili.posterior.mcmc_posterior.html#jaxili.posterior.mcmc_posterior.MCMCPosterior.set_default_x">(jaxili.posterior.mcmc_posterior.MCMCPosterior method)</a>
+</li>
+      </ul></li>
+      <li><a href="jaxili.inference.nle.html#jaxili.inference.nle.NLE.set_loss_fn">set_loss_fn() (jaxili.inference.nle.NLE method)</a>
+
+      <ul>
+        <li><a href="jaxili.inference.npe.html#jaxili.inference.npe.NPE.set_loss_fn">(jaxili.inference.npe.NPE method)</a>
+</li>
+      </ul></li>
+      <li><a href="jaxili.posterior.mcmc_posterior.html#jaxili.posterior.mcmc_posterior.MCMCPosterior.set_mcmc_kwargs">set_mcmc_kwargs() (jaxili.posterior.mcmc_posterior.MCMCPosterior method)</a>
+</li>
+      <li><a href="jaxili.posterior.mcmc_posterior.html#jaxili.posterior.mcmc_posterior.MCMCPosterior.set_mcmc_method">set_mcmc_method() (jaxili.posterior.mcmc_posterior.MCMCPosterior method)</a>
+</li>
+      <li><a href="jaxili.inference.nle.html#jaxili.inference.nle.NLE.set_model_hparams">set_model_hparams() (jaxili.inference.nle.NLE method)</a>
+
+      <ul>
+        <li><a href="jaxili.inference.npe.html#jaxili.inference.npe.NPE.set_model_hparams">(jaxili.inference.npe.NPE method)</a>
+</li>
+      </ul></li>
+      <li><a href="jaxili.posterior.mcmc_posterior.html#jaxili.posterior.mcmc_posterior.MCMCPosterior.set_prior">set_prior() (jaxili.posterior.mcmc_posterior.MCMCPosterior method)</a>
+</li>
+      <li><a href="jaxili.model.html#jaxili.model.ConditionalMADE.setup">setup() (jaxili.model.ConditionalMADE method)</a>
+
+      <ul>
+        <li><a href="jaxili.model.html#jaxili.model.ConditionalMAF.setup">(jaxili.model.ConditionalMAF method)</a>
+</li>
+        <li><a href="jaxili.model.html#jaxili.model.NDE_Compressor.setup">(jaxili.model.NDE_Compressor method)</a>
+</li>
+      </ul></li>
+      <li><a href="jaxili.model.html#jaxili.model.NDE_w_Standardization.standardize">standardize() (jaxili.model.NDE_w_Standardization method)</a>
+</li>
+      <li><a href="jaxili.model.html#jaxili.model.Standardizer">Standardizer (class in jaxili.model)</a>
+</li>
+      <li><a href="jaxili.model.html#jaxili.model.Standardizer.std">std (jaxili.model.Standardizer attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.tracker">tracker() (jaxili.train.TrainerModule method)</a>
+</li>
+      <li><a href="jaxili.inference.nle.html#jaxili.inference.nle.NLE.train">train() (jaxili.inference.nle.NLE method)</a>
+
+      <ul>
+        <li><a href="jaxili.inference.npe.html#jaxili.inference.npe.NPE.train">(jaxili.inference.npe.NPE method)</a>
+</li>
+      </ul></li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.train_epoch">train_epoch() (jaxili.train.TrainerModule method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.train_model">train_model() (jaxili.train.TrainerModule method)</a>
+</li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule">TrainerModule (class in jaxili.train)</a>
+</li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainState">TrainState (class in jaxili.train)</a>
+</li>
+      <li><a href="jaxili.model.html#jaxili.model.NDE_w_Standardization.transformation">transformation (jaxili.model.NDE_w_Standardization attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.posterior.base_posterior.html#jaxili.posterior.base_posterior.NeuralPosterior.unnormalized_log_prob">unnormalized_log_prob() (jaxili.posterior.base_posterior.NeuralPosterior method)</a>
+
+      <ul>
+        <li><a href="jaxili.posterior.direct_posterior.html#jaxili.posterior.direct_posterior.DirectPosterior.unnormalized_log_prob">(jaxili.posterior.direct_posterior.DirectPosterior method)</a>
+</li>
+        <li><a href="jaxili.posterior.mcmc_posterior.html#jaxili.posterior.mcmc_posterior.MCMCPosterior.unnormalized_log_prob">(jaxili.posterior.mcmc_posterior.MCMCPosterior method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.model.html#jaxili.model.NDE_w_Standardization.unstandardize">unstandardize() (jaxili.model.NDE_w_Standardization method)</a>
+</li>
+      <li><a href="jaxili.model.html#jaxili.model.ConditionalMAF.use_reverse">use_reverse (jaxili.model.ConditionalMAF attribute)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -491,6 +1070,14 @@ document.write(`
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="jaxili.utils.html#jaxili.utils.validate_theta_x">validate_theta_x() (in module jaxili.utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Y">Y</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.model.html#jaxili.model.AffineCoupling.y">y (jaxili.model.AffineCoupling attribute)</a>
 </li>
   </ul></td>
 </tr></table>

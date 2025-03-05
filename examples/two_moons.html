@@ -1,0 +1,925 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Two moons example &#8212; JaxILI 0.1.2 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=0deb7d70"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'examples/two_moons';</script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">JaxILI 0.1.2 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../manual/index.html">Software manual</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../manual/installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../manual/first_steps.html">First steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../manual/release_notes.html">Release notes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../manual/get_in_touch.html">Get in touch</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="index.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">JaxILI</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="nle_quickstart.html">Neural Likelihood Estimation Quickstart</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../user_guide/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/how_jaxili_work.html">How <code class="docutils literal notranslate"><span class="pre">JaxILI</span></code> works</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../index_reference.html">Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../jaxili.inference.html">jaxili.inference package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../jaxili.inference.nle.html">jaxili.inference.nle module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jaxili.inference.npe.html">jaxili.inference.npe module</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../jaxili.loss.html">jaxili.loss module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jaxili.model.html">jaxili.model module</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../jaxili.posterior.html">jaxili.posterior package</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../jaxili.posterior.base_posterior.html">jaxili.posterior.base_posterior module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jaxili.posterior.direct_posterior.html">jaxili.posterior.direct_posterior module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../jaxili.posterior.mcmc_posterior.html">jaxili.posterior.mcmc_posterior module</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../jaxili.train.html">jaxili.train module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jaxili.utils.html">jaxili.utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../jaxili.validation.html">jaxili.validation module</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/examples/two_moons.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Two moons example</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Defining-the-simulator">Defining the simulator</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Neural-Posterior-Estimation-(NPE)">Neural Posterior Estimation (NPE)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Checking-the-posterior">Checking the posterior</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Neural-Likelihood-Estimation-(NLE)">Neural Likelihood Estimation (NLE)</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="Two-moons-example">
+<h1>Two moons example<a class="headerlink" href="#Two-moons-example" title="Link to this heading">#</a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxili.inference</span><span class="w"> </span><span class="kn">import</span> <span class="n">NPE</span><span class="p">,</span> <span class="n">NLE</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpyro.distributions</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dist</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">getdist</span><span class="w"> </span><span class="kn">import</span> <span class="n">plots</span><span class="p">,</span> <span class="n">MCSamples</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Device used by jax:&quot;</span><span class="p">,</span> <span class="n">jax</span><span class="o">.</span><span class="n">devices</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+2025-03-05 11:03:08.879338: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Device used by jax: [cuda(id=0)]
+</pre></div></div>
+</div>
+<p>Two moons is a standard benchmark task where the posterior is bimodal. This is a good example to test the ability of NPE and NLE to sample from a complex posterior.</p>
+<section id="Defining-the-simulator">
+<h2>Defining the simulator<a class="headerlink" href="#Defining-the-simulator" title="Link to this heading">#</a></h2>
+<p>We will try to solve the following inference problem:</p>
+<ul class="simple">
+<li><p>Prior: <span class="math notranslate nohighlight">\(\mathcal{U}(-1, 1)\)</span></p></li>
+<li><p>Simulator: <span class="math notranslate nohighlight">\(x|\theta \sim \left[\begin{array}{c} r\cos(\alpha)+0.25 \\ r\sin(\alpha)\end{array}\right]+\left[ \begin{array}{c} -|\theta_1+\theta_2|/\sqrt{2}\\ (-\theta_1+\theta_2)/\sqrt{2} \end{array}\right]\)</span> where <span class="math notranslate nohighlight">\(\alpha \sim \mathcal{U}(-\pi/2, \pi/2)\)</span> and <span class="math notranslate nohighlight">\(r \sim \mathcal{N}(0.1, 0.01^2)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\theta \in \mathbb{R}^2\)</span>, <span class="math notranslate nohighlight">\(x\in \mathbb{R}^2\)</span></p></li>
+</ul>
+<p>Let’s implement the simulator.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">simulator</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">rng_key</span><span class="p">):</span>
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="n">theta</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1">#Sample angle</span>
+    <span class="n">alpha_key</span><span class="p">,</span> <span class="n">rng_key</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">rng_key</span><span class="p">)</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">alpha_key</span><span class="p">,</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">minval</span><span class="o">=-</span><span class="n">jnp</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">maxval</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1">#Sample radius</span>
+    <span class="n">r_key</span><span class="p">,</span> <span class="n">rng_key</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">rng_key</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">r_key</span><span class="p">,</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">*</span><span class="mf">0.01</span><span class="o">+</span><span class="mf">0.1</span>
+
+    <span class="c1">#Compute x_1 and x_2</span>
+    <span class="n">x_1</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span><span class="o">+</span><span class="mf">0.25</span> <span class="o">-</span> <span class="n">jnp</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">theta</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">theta</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">x_2</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">jnp</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span> <span class="n">theta</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">theta</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">/</span><span class="n">jnp</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jnp</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">x_1</span><span class="p">,</span> <span class="n">x_2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<p>Let’s create the datatset.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">master_key</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">n_dim</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">num_samples</span> <span class="o">=</span> <span class="mi">10_000</span>
+<span class="c1">#Generate parameters</span>
+<span class="n">theta_key</span><span class="p">,</span> <span class="n">master_key</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">master_key</span><span class="p">)</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">theta_key</span><span class="p">,</span> <span class="p">(</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">n_dim</span><span class="p">),</span> <span class="n">minval</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">maxval</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1">#Generate data</span>
+<span class="n">data_key</span><span class="p">,</span> <span class="n">master_key</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">master_key</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">simulator</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">data_key</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Let&#39;s create a fiducial target</span>
+<span class="n">fiducial</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.2</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">]])</span>
+<span class="n">obs</span> <span class="o">=</span> <span class="n">simulator</span><span class="p">(</span><span class="n">fiducial</span><span class="p">,</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fiducial parameters:&quot;</span><span class="p">,</span> <span class="n">fiducial</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fiducial observation:&quot;</span><span class="p">,</span> <span class="n">obs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Fiducial parameters: [[ 0.2 -0.5]]
+Fiducial observation: [[ 0.15164769 -0.47430325]]
+</pre></div></div>
+</div>
+</section>
+<section id="Neural-Posterior-Estimation-(NPE)">
+<h2>Neural Posterior Estimation (NPE)<a class="headerlink" href="#Neural-Posterior-Estimation-(NPE)" title="Link to this heading">#</a></h2>
+<p>Let’s setup the pipeline. We create the inference object, we push the simulations, we train and we fetch the posterior!</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inference</span> <span class="o">=</span> <span class="n">NPE</span><span class="p">()</span>
+<span class="n">inference</span> <span class="o">=</span> <span class="n">inference</span><span class="o">.</span><span class="n">append_simulations</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[!] Inputs are valid.
+[!] Appending 10000 simulations to the dataset.
+[!] Dataset split into training, validation and test sets.
+[!] Training set: 7000 simulations.
+[!] Validation set: 2000 simulations.
+[!] Test set: 1000 simulations.
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Specify a checkpoint to save the weights of the neural network</span>
+<span class="n">CHECKPOINT_PATH</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span>
+<span class="c1">#Turn it into an absolut path</span>
+<span class="n">CHECKPOINT_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">CHECKPOINT_PATH</span><span class="p">)</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">1e-3</span>
+
+<span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">250</span>
+
+<span class="n">metrics</span><span class="p">,</span> <span class="n">density_estimator</span> <span class="o">=</span> <span class="n">inference</span><span class="o">.</span><span class="n">train</span><span class="p">(</span>
+    <span class="n">checkpoint_path</span><span class="o">=</span><span class="n">CHECKPOINT_PATH</span><span class="p">,</span>
+    <span class="n">num_epochs</span><span class="o">=</span><span class="n">num_epochs</span><span class="p">,</span>
+    <span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+WARNING:absl:Configured `CheckpointManager` using deprecated legacy API. Please follow the instructions at https://orbax.readthedocs.io/en/latest/api_refactor.html to migrate by May 1st, 2024.
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[!] Creating DataLoaders with batch_size 50.
+[!] Building the neural network.
+[!] Creating the Trainer module.
+Could not tabulate model:
+[!] Training the density estimator.
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Epochs: Val loss -3.342/ Best val loss -3.352:  54%|█████▎    | 134/250 [00:31&lt;00:27,  4.29it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Neural network training stopped after 135 epochs.
+Early stopping with best validation metric: -3.351813554763794
+Best model saved at epoch 114
+Early stopping parameters: min_delta=0.001, patience=20
+[!] Training loss: -3.461625814437866
+[!] Validation loss: -3.351813554763794
+[!] Test loss: -3.3102118968963623
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">posterior</span> <span class="o">=</span> <span class="n">inference</span><span class="o">.</span><span class="n">build_posterior</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[!] Posterior $p(\theta| x)$ built. The class DirectPosterior is used to sample and evaluate the log probability.
+</pre></div></div>
+</div>
+</section>
+<section id="Checking-the-posterior">
+<h2>Checking the posterior<a class="headerlink" href="#Checking-the-posterior" title="Link to this heading">#</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample_key</span><span class="p">,</span> <span class="n">master_key</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">master_key</span><span class="p">)</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="n">posterior</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="mi">10_000</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">sample_key</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">rf</span><span class="s1">&#39;\theta_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_dim</span><span class="p">)]</span>
+
+<span class="n">samples_gd</span> <span class="o">=</span> <span class="n">MCSamples</span><span class="p">(</span><span class="n">samples</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">plots</span><span class="o">.</span><span class="n">get_subplot_plotter</span><span class="p">()</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">figure_legend_frame</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">g</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">alpha_filled_add</span> <span class="o">=</span> <span class="mf">0.4</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">triangle_plot</span><span class="p">([</span><span class="n">samples_gd</span><span class="p">],</span> <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">line_args</span><span class="o">=</span><span class="p">[</span>
+                    <span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;blue&#39;</span><span class="p">}</span>
+                <span class="p">],</span>
+                <span class="n">contour_colors</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;blue&#39;</span><span class="p">],</span>
+                <span class="n">markers</span><span class="o">=</span><span class="p">{</span>
+                    <span class="n">label</span><span class="p">:</span> <span class="n">val</span> <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">fiducial</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="p">})</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Removed no burn in
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_two_moons_15_1.png" src="../_images/examples_two_moons_15_1.png" />
+</div>
+</div>
+</section>
+<section id="Neural-Likelihood-Estimation-(NLE)">
+<h2>Neural Likelihood Estimation (NLE)<a class="headerlink" href="#Neural-Likelihood-Estimation-(NLE)" title="Link to this heading">#</a></h2>
+<p>Likewise, we can learn the likelihood before sampling the posterior.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inference</span> <span class="o">=</span> <span class="n">NLE</span><span class="p">()</span>
+<span class="n">inference</span> <span class="o">=</span> <span class="n">inference</span><span class="o">.</span><span class="n">append_simulations</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/sacha/anaconda3/envs/jaxili/lib/python3.10/multiprocessing/popen_fork.py:66: RuntimeWarning: os.fork() was called. os.fork() is incompatible with multithreaded code, and JAX is multithreaded, so this will likely lead to a deadlock.
+  self.pid = os.fork()
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[!] Inputs are valid.
+[!] Appending 10000 simulations to the dataset.
+[!] Dataset split into training, validation and test sets.
+[!] Training set: 7000 simulations.
+[!] Validation set: 2000 simulations.
+[!] Test set: 1000 simulations.
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Specify a checkpoint to save the weights of the neural network</span>
+<span class="n">CHECKPOINT_PATH</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span>
+<span class="c1">#Turn it into an absolut path</span>
+<span class="n">CHECKPOINT_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">CHECKPOINT_PATH</span><span class="p">)</span>
+
+<span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">250</span>
+
+<span class="n">metrics</span><span class="p">,</span> <span class="n">density_estimator</span> <span class="o">=</span> <span class="n">inference</span><span class="o">.</span><span class="n">train</span><span class="p">(</span>
+    <span class="n">checkpoint_path</span><span class="o">=</span><span class="n">CHECKPOINT_PATH</span><span class="p">,</span>
+    <span class="n">num_epochs</span><span class="o">=</span><span class="n">num_epochs</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[10], line 8</span>
+<span class="ansi-green-intense-fg ansi-bold">      4</span> CHECKPOINT_PATH <span style="color: rgb(98,98,98)">=</span> os<span style="color: rgb(98,98,98)">.</span>path<span style="color: rgb(98,98,98)">.</span>abspath(CHECKPOINT_PATH)
+<span class="ansi-green-intense-fg ansi-bold">      6</span> num_epochs <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(98,98,98)">250</span>
+<span class="ansi-green-fg">----&gt; 8</span> metrics, density_estimator <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">inference</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">train</span><span class="ansi-yellow-bg">(</span>
+<span class="ansi-green-intense-fg ansi-bold">      9</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">checkpoint_path</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">CHECKPOINT_PATH</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">     10</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">num_epochs</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">num_epochs</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">     11</span> <span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg">~/anaconda3/envs/jaxili/lib/python3.10/site-packages/jaxili/inference/npe.py:480</span>, in <span class="ansi-cyan-fg">NPE.train</span><span class="ansi-blue-fg">(self, training_batch_size, learning_rate, patience, num_epochs, check_val_every_epoch, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">    477</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_create_data_loader(batch_size<span style="color: rgb(98,98,98)">=</span>training_batch_size)
+<span class="ansi-green-intense-fg ansi-bold">    479</span> <span class="ansi-bold" style="color: rgb(0,135,0)">try</span>:
+<span class="ansi-green-fg">--&gt; 480</span>     metrics <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">trainer</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">train_model</span><span class="ansi-yellow-bg">(</span>
+<span class="ansi-green-intense-fg ansi-bold">    481</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_train_loader</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    482</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_val_loader</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    483</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">test_loader</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_test_loader</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    484</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">num_epochs</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">num_epochs</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    485</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg">patience</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">patience</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    486</span> <span class="ansi-yellow-bg">        </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">*</span><span class="ansi-yellow-bg">kwargs</span><span class="ansi-yellow-bg">,</span>
+<span class="ansi-green-intense-fg ansi-bold">    487</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">    488</span> <span class="ansi-bold" style="color: rgb(0,135,0)">except</span> <span class="ansi-bold" style="color: rgb(215,95,95)">AttributeError</span>:
+<span class="ansi-green-intense-fg ansi-bold">    489</span>     optimizer_hparams <span style="color: rgb(98,98,98)">=</span> {
+<span class="ansi-green-intense-fg ansi-bold">    490</span>         <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">lr</span><span style="color: rgb(175,0,0)">&#34;</span>: learning_rate,
+<span class="ansi-green-intense-fg ansi-bold">    491</span>         <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">optimizer_name</span><span style="color: rgb(175,0,0)">&#34;</span>: kwargs<span style="color: rgb(98,98,98)">.</span>get(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">optimizer_name</span><span style="color: rgb(175,0,0)">&#34;</span>, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">adam</span><span style="color: rgb(175,0,0)">&#34;</span>),
+<span class="ansi-green-fg">   (...)</span>
+<span class="ansi-green-intense-fg ansi-bold">    494</span>         <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">weight_decay</span><span style="color: rgb(175,0,0)">&#34;</span>: kwargs<span style="color: rgb(98,98,98)">.</span>get(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">weight_decay</span><span style="color: rgb(175,0,0)">&#34;</span>, <span style="color: rgb(98,98,98)">0.0</span>),
+<span class="ansi-green-intense-fg ansi-bold">    495</span>     }
+
+<span class="ansi-red-fg">TypeError</span>: TrainerModule.train_model() got an unexpected keyword argument &#39;checkpoint_path&#39;
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">posterior</span> <span class="o">=</span> <span class="n">inference</span><span class="o">.</span><span class="n">build_posterior</span><span class="p">(</span>
+    <span class="n">prior_distr</span><span class="o">=</span><span class="n">dist</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">high</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])),</span>
+    <span class="n">mcmc_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;num_chains&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Using MCMC method: nuts_numpyro
+MCMC kwargs: {&#39;num_chains&#39;: 10}
+[!] Posterior $p(\theta| x)$ built. The class MCMCPosterior is used to sample and evaluate the log probability.\n The sampling is performed using MCMC methods.
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_samples</span> <span class="o">=</span> <span class="mi">2_500</span>
+<span class="n">sample_key</span><span class="p">,</span> <span class="n">master_key</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">master_key</span><span class="p">)</span>
+<span class="n">samples_nle</span> <span class="o">=</span> <span class="n">posterior</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">sample_key</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/sacha/anaconda3/envs/jaxili/lib/python3.10/site-packages/jaxili/posterior/mcmc_posterior.py:243: UserWarning: There are not enough devices to run parallel chains: expected 10 but got 1. Chains will be drawn sequentially. If you are running MCMC in CPU, consider using `numpyro.set_host_device_count(10)` at the beginning of your program. You can double-check how many devices are available in your system using `jax.local_device_count()`.
+  mcmc = MCMC(
+sample: 100%|██████████| 3000/3000 [00:45&lt;00:00, 66.40it/s, 31 steps of size 2.68e-01. acc. prob=0.81]
+sample: 100%|██████████| 3000/3000 [00:30&lt;00:00, 98.12it/s, 3 steps of size 1.97e-01. acc. prob=0.90]
+sample: 100%|██████████| 3000/3000 [00:30&lt;00:00, 98.66it/s, 3 steps of size 1.56e-01. acc. prob=0.93]
+sample: 100%|██████████| 3000/3000 [00:29&lt;00:00, 100.12it/s, 27 steps of size 1.60e-01. acc. prob=0.92]
+sample: 100%|██████████| 3000/3000 [00:29&lt;00:00, 100.44it/s, 17 steps of size 1.76e-01. acc. prob=0.92]
+sample: 100%|██████████| 3000/3000 [00:29&lt;00:00, 103.43it/s, 3 steps of size 1.60e-01. acc. prob=0.92]
+sample: 100%|██████████| 3000/3000 [00:29&lt;00:00, 103.22it/s, 15 steps of size 1.86e-01. acc. prob=0.90]
+sample: 100%|██████████| 3000/3000 [00:28&lt;00:00, 104.73it/s, 7 steps of size 1.61e-01. acc. prob=0.90]
+sample: 100%|██████████| 3000/3000 [00:30&lt;00:00, 99.61it/s, 39 steps of size 1.51e-01. acc. prob=0.93]
+sample: 100%|██████████| 3000/3000 [00:29&lt;00:00, 100.09it/s, 13 steps of size 1.40e-01. acc. prob=0.94]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">rf</span><span class="s1">&#39;\theta_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_dim</span><span class="p">)]</span>
+
+<span class="n">samples_gd</span> <span class="o">=</span> <span class="n">MCSamples</span><span class="p">(</span><span class="n">samples</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+<span class="n">samples_nle_gd</span> <span class="o">=</span> <span class="n">MCSamples</span><span class="p">(</span><span class="n">samples</span><span class="o">=</span><span class="n">samples_nle</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">plots</span><span class="o">.</span><span class="n">get_subplot_plotter</span><span class="p">()</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">figure_legend_frame</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">g</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">alpha_filled_add</span> <span class="o">=</span> <span class="mf">0.4</span>
+
+<span class="n">g</span><span class="o">.</span><span class="n">triangle_plot</span><span class="p">([</span><span class="n">samples_gd</span><span class="p">,</span> <span class="n">samples_nle_gd</span><span class="p">],</span> <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">line_args</span><span class="o">=</span><span class="p">[</span>
+                    <span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;blue&#39;</span><span class="p">},</span>
+                    <span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;red&#39;</span><span class="p">}</span>
+                <span class="p">],</span>
+                <span class="n">legend_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;NPE&#39;</span><span class="p">,</span> <span class="s1">&#39;NLE&#39;</span><span class="p">],</span>
+                <span class="n">contour_colors</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">],</span>
+                <span class="n">markers</span><span class="o">=</span><span class="p">{</span>
+                    <span class="n">label</span><span class="p">:</span> <span class="n">val</span> <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">fiducial</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="p">})</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Removed no burn in
+Removed no burn in
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+WARNING:root:2D kernel density bandwidth optimizer failed for \theta_0, \theta_1. Using fallback width: f(a) and f(b) must have different signs
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_two_moons_22_2.png" src="../_images/examples_two_moons_22_2.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Defining-the-simulator">Defining the simulator</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Neural-Posterior-Estimation-(NPE)">Neural Posterior Estimation (NPE)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Checking-the-posterior">Checking the posterior</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Neural-Likelihood-Estimation-(NLE)">Neural Likelihood Estimation (NLE)</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sacha Guerrini
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Sacha Guerrini.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -159,6 +159,11 @@
 <li class="toctree-l2"><a class="reference internal" href="manual/get_in_touch.html">Get in touch</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="examples/index.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">JaxILI</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/nle_quickstart.html">Neural Likelihood Estimation Quickstart</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="user_guide/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="user_guide/how_jaxili_work.html">How <code class="docutils literal notranslate"><span class="pre">JaxILI</span></code> works</a></li>
 </ul>
@@ -342,14 +347,42 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="jaxili-inference-package">
-<h1>jaxili.inference package<a class="headerlink" href="#jaxili-inference-package" title="Link to this heading">#</a></h1>
+  <section id="module-jaxili.inference">
+<span id="jaxili-inference-package"></span><h1>jaxili.inference package<a class="headerlink" href="#module-jaxili.inference" title="Link to this heading">#</a></h1>
+<p>Inference.</p>
+<p>This module contains the inference classes for the JaxILI library. JaxILI implements classes for Neural Posterior and Likelihood Estimations.</p>
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="jaxili.inference.nle.html">jaxili.inference.nle module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="jaxili.inference.npe.html">jaxili.inference.npe module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jaxili.inference.nle.html">jaxili.inference.nle module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jaxili.inference.nle.html#jaxili.inference.nle.NLE"><code class="docutils literal notranslate"><span class="pre">NLE</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.inference.nle.html#jaxili.inference.nle.NLE.append_simulations"><code class="docutils literal notranslate"><span class="pre">NLE.append_simulations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.inference.nle.html#jaxili.inference.nle.NLE.build_posterior"><code class="docutils literal notranslate"><span class="pre">NLE.build_posterior()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.inference.nle.html#jaxili.inference.nle.NLE.create_trainer"><code class="docutils literal notranslate"><span class="pre">NLE.create_trainer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.inference.nle.html#jaxili.inference.nle.NLE.set_dataloader"><code class="docutils literal notranslate"><span class="pre">NLE.set_dataloader()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.inference.nle.html#jaxili.inference.nle.NLE.set_dataset"><code class="docutils literal notranslate"><span class="pre">NLE.set_dataset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.inference.nle.html#jaxili.inference.nle.NLE.set_loss_fn"><code class="docutils literal notranslate"><span class="pre">NLE.set_loss_fn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.inference.nle.html#jaxili.inference.nle.NLE.set_model_hparams"><code class="docutils literal notranslate"><span class="pre">NLE.set_model_hparams()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.inference.nle.html#jaxili.inference.nle.NLE.train"><code class="docutils literal notranslate"><span class="pre">NLE.train()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="jaxili.inference.npe.html">jaxili.inference.npe module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jaxili.inference.npe.html#jaxili.inference.npe.NPE"><code class="docutils literal notranslate"><span class="pre">NPE</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.inference.npe.html#jaxili.inference.npe.NPE.append_simulations"><code class="docutils literal notranslate"><span class="pre">NPE.append_simulations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.inference.npe.html#jaxili.inference.npe.NPE.build_posterior"><code class="docutils literal notranslate"><span class="pre">NPE.build_posterior()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.inference.npe.html#jaxili.inference.npe.NPE.create_trainer"><code class="docutils literal notranslate"><span class="pre">NPE.create_trainer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.inference.npe.html#jaxili.inference.npe.NPE.set_dataloader"><code class="docutils literal notranslate"><span class="pre">NPE.set_dataloader()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.inference.npe.html#jaxili.inference.npe.NPE.set_dataset"><code class="docutils literal notranslate"><span class="pre">NPE.set_dataset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.inference.npe.html#jaxili.inference.npe.NPE.set_loss_fn"><code class="docutils literal notranslate"><span class="pre">NPE.set_loss_fn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.inference.npe.html#jaxili.inference.npe.NPE.set_model_hparams"><code class="docutils literal notranslate"><span class="pre">NPE.set_model_hparams()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.inference.npe.html#jaxili.inference.npe.NPE.train"><code class="docutils literal notranslate"><span class="pre">NPE.train()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </section>
