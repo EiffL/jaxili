@@ -20,6 +20,9 @@ Table of Contents
    :caption: Contents:
 
    manual/index
+   examples/index
+   user_guide/index
+   index_reference
 
 Indices and tables
 
