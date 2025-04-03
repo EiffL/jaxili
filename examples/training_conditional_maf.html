@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Neural Likelihood Estimation Quickstart &#8212; JaxILI 0.1.2 documentation</title>
+    <title>Training a Conditional MAF &#8212; JaxILI 0.1.2 documentation</title>
   
   
   
@@ -44,12 +44,12 @@
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'examples/nle_quickstart';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'examples/training_conditional_maf';</script>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Training a Conditional MAF" href="training_conditional_maf.html" />
-    <link rel="prev" title="Getting started with JaxILI" href="getting_started.html" />
+    <link rel="next" title="User guide" href="../user_guide/index.html" />
+    <link rel="prev" title="Neural Likelihood Estimation Quickstart" href="nle_quickstart.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -164,8 +164,8 @@
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Examples</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">JaxILI</span></code></a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Neural Likelihood Estimation Quickstart</a></li>
-<li class="toctree-l2"><a class="reference internal" href="training_conditional_maf.html">Training a Conditional MAF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nle_quickstart.html">Neural Likelihood Estimation Quickstart</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Training a Conditional MAF</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../user_guide/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -245,7 +245,7 @@
       
       
       
-      <li><a href="../_sources/examples/nle_quickstart.ipynb" target="_blank"
+      <li><a href="../_sources/examples/training_conditional_maf.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -329,7 +329,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Neural Likelihood Estimation Quickstart</h1>
+    <h1>Training a Conditional MAF</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -339,11 +339,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Training">Training</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Building-the-posterior-and-evaluating">Building the posterior and evaluating</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Visualisation-of-the-learned-posterior">Visualisation of the learned posterior</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Comparison-with-reference-samples">Comparison with reference samples</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Next-steps">Next steps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Reloading-a-trained-network">Reloading a trained network</a></li>
 </ul>
             </nav>
         </div>
@@ -355,8 +351,10 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="Neural-Likelihood-Estimation-Quickstart">
-<h1>Neural Likelihood Estimation Quickstart<a class="headerlink" href="#Neural-Likelihood-Estimation-Quickstart" title="Link to this heading">#</a></h1>
+  <section id="Training-a-Conditional-MAF">
+<h1>Training a Conditional MAF<a class="headerlink" href="#Training-a-Conditional-MAF" title="Link to this heading">#</a></h1>
+<p>With <code class="docutils literal notranslate"><span class="pre">JaxILI</span></code>, it is possible to train a normalizing flow by hand without using the <code class="docutils literal notranslate"><span class="pre">NPE</span></code> or <code class="docutils literal notranslate"><span class="pre">NLE</span></code> interface. This can be useful to have a better control of the training loop.</p>
+<p>This notebook shows how one can train a normalizing flow without using the API provided by <code class="docutils literal notranslate"><span class="pre">JaxILI</span></code>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -365,9 +363,13 @@ document.write(`
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax_dataloader</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jdl</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">numpy</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">jaxili.inference</span><span class="w"> </span><span class="kn">import</span> <span class="n">NLE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxili.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_data_loader</span>  <span class="c1">#To create data loaders</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxili.train</span><span class="w"> </span><span class="kn">import</span> <span class="n">TrainerModule</span> <span class="c1">#To perform the training</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxili.model</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConditionalMAF</span> <span class="c1">#The model used to learn the target distribution</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxili.loss</span><span class="w"> </span><span class="kn">import</span> <span class="n">loss_nll_npe</span> <span class="c1">#Losses to train NFs with different configurations are provided</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Device used by jax:&quot;</span><span class="p">,</span> <span class="n">jax</span><span class="o">.</span><span class="n">devices</span><span class="p">())</span>
 </pre></div>
@@ -378,10 +380,10 @@ document.write(`
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-2025-03-12 20:28:41.278515: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:477] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2025-04-01 13:45:46.229508: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:477] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
 WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
-E0000 00:00:1741807721.319378   24664 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
-E0000 00:00:1741807721.326117   24664 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+E0000 00:00:1743507946.255476   27494 cuda_dnn.cc:8310] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+E0000 00:00:1743507946.264976   27494 cuda_blas.cc:1418] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -392,12 +394,12 @@ E0000 00:00:1741807721.326117   24664 cuda_blas.cc:1418] Unable to register cuBL
 Device used by jax: [CudaDevice(id=0)]
 </pre></div></div>
 </div>
-<p>In the previous example, we show how one can use Neural Posterior Estimation to estimate parameters using simulations and Normalizing Flows. Another strategy is to use the neural networks to learn the likelihood rather than the posterior. Let’s go through the same example using Neural Likelihood Estimation.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_dim</span> <span class="o">=</span> <span class="mi">3</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Let&#39;s use the same simulator than previously</span>
+<span class="n">n_dim</span> <span class="o">=</span> <span class="mi">3</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">simulator</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">rng_key</span><span class="p">):</span>
     <span class="n">batch_size</span> <span class="o">=</span> <span class="n">theta</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -405,12 +407,12 @@ Device used by jax: [CudaDevice(id=0)]
 </pre></div>
 </div>
 </div>
-<div class="nbinput nblast docutils container">
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">master_key</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">num_samples</span> <span class="o">=</span> <span class="mi">50_000</span>
+<span class="n">num_samples</span> <span class="o">=</span> <span class="mi">10_000</span>
 
 <span class="n">theta_key</span><span class="p">,</span> <span class="n">master_key</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">master_key</span><span class="p">)</span>
 
@@ -419,14 +421,8 @@ Device used by jax: [CudaDevice(id=0)]
 
 <span class="n">sim_key</span><span class="p">,</span> <span class="n">master_key</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">master_key</span><span class="p">)</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">simulator</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">sim_key</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Parameters shape:&quot;</span><span class="p">,</span> <span class="n">theta</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Parameters shape:&quot;</span><span class="p">,</span> <span class="n">theta</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data shape:&quot;</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -436,37 +432,36 @@ Device used by jax: [CudaDevice(id=0)]
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Parameters shape: (50000, 3)
-Data shape: (50000, 3)
+Parameters shape: (10000, 3)
+Data shape: (10000, 3)
 </pre></div></div>
 </div>
-<p>Like in the previous example, we create an inference object. Only this time we use Neural Likelihood Estimation.</p>
-<div class="nbinput docutils container">
+<p>Let’s first create train, validation and test sets.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_set</span> <span class="o">=</span> <span class="n">jdl</span><span class="o">.</span><span class="n">ArrayDataset</span><span class="p">(</span><span class="n">theta</span><span class="p">[:</span><span class="mi">7000</span><span class="p">],</span> <span class="n">x</span><span class="p">[:</span><span class="mi">7000</span><span class="p">])</span>
+<span class="n">val_set</span> <span class="o">=</span> <span class="n">jdl</span><span class="o">.</span><span class="n">ArrayDataset</span><span class="p">(</span><span class="n">theta</span><span class="p">[</span><span class="mi">7000</span><span class="p">:</span><span class="mi">9000</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">7000</span><span class="p">:</span><span class="mi">9000</span><span class="p">])</span>
+<span class="n">test_set</span> <span class="o">=</span> <span class="n">jdl</span><span class="o">.</span><span class="n">ArrayDataset</span><span class="p">(</span><span class="n">theta</span><span class="p">[:</span><span class="mi">9000</span><span class="p">],</span> <span class="n">x</span><span class="p">[:</span><span class="mi">9000</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<p>We can then get dataloaders.</p>
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inference</span> <span class="o">=</span> <span class="n">NLE</span><span class="p">()</span>
-<span class="n">inference</span> <span class="o">=</span> <span class="n">inference</span><span class="o">.</span><span class="n">append_simulations</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_loader</span><span class="p">,</span> <span class="n">val_loader</span><span class="p">,</span> <span class="n">test_loader</span> <span class="o">=</span> <span class="n">create_data_loader</span><span class="p">(</span>
+    <span class="n">train_set</span><span class="p">,</span> <span class="n">val_set</span><span class="p">,</span> <span class="n">test_set</span><span class="p">,</span>
+    <span class="n">train</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+    <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-[!] Inputs are valid.
-[!] Appending 50000 simulations to the dataset.
-[!] Dataset split into training, validation and test sets.
-[!] Training set: 35000 simulations.
-[!] Validation set: 9999 simulations.
-[!] Test set: 5001 simulations.
-</pre></div></div>
-</div>
-<section id="Training">
-<h2>Training<a class="headerlink" href="#Training" title="Link to this heading">#</a></h2>
-<p>Let’s train the model with the default setting.</p>
-<div class="nbinput docutils container">
+<p>We then have to specify all the hyperparameters for the training.</p>
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
@@ -475,11 +470,55 @@ Data shape: (50000, 3)
 <span class="c1">#Turn it into an absolut path</span>
 <span class="n">CHECKPOINT_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">CHECKPOINT_PATH</span><span class="p">)</span>
 
-<span class="n">num_epochs</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">loss_fn</span> <span class="o">=</span> <span class="n">loss_nll_npe</span>
 
-<span class="n">metrics</span><span class="p">,</span> <span class="n">density_estimator</span> <span class="o">=</span> <span class="n">inference</span><span class="o">.</span><span class="n">train</span><span class="p">(</span>
-    <span class="n">checkpoint_path</span><span class="o">=</span><span class="n">CHECKPOINT_PATH</span><span class="p">,</span>
-    <span class="n">num_epochs</span><span class="o">=</span><span class="n">num_epochs</span><span class="p">,</span>
+<span class="n">model_hparams_maf</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;n_in&#39;</span><span class="p">:</span> <span class="n">n_dim</span><span class="p">,</span>
+    <span class="s1">&#39;n_cond&#39;</span><span class="p">:</span> <span class="n">n_dim</span><span class="p">,</span>
+    <span class="s1">&#39;n_layers&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s1">&#39;layers&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">],</span>
+    <span class="s1">&#39;activation&#39;</span><span class="p">:</span> <span class="n">jax</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">relu</span><span class="p">,</span>
+    <span class="s1">&#39;use_reverse&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s1">&#39;seed&#39;</span> <span class="p">:</span> <span class="mi">42</span>
+<span class="p">}</span>
+
+<span class="n">optimizer_hparams</span> <span class="o">=</span> <span class="p">{</span> <span class="c1">#hyperparameters of the optimizer for training</span>
+    <span class="s1">&#39;lr&#39;</span><span class="p">:</span> <span class="mf">5e-4</span><span class="p">,</span>
+    <span class="s1">&#39;optimizer_name&#39;</span><span class="p">:</span> <span class="s1">&#39;adam&#39;</span>
+<span class="p">}</span>
+
+<span class="n">logger_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;base_log_dir&#39;</span><span class="p">:</span> <span class="n">CHECKPOINT_PATH</span>
+<span class="p">}</span>
+
+<span class="n">check_val_every_epoch</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">debug</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="n">nde_class</span><span class="o">=</span> <span class="s2">&quot;NPE&quot;</span>
+</pre></div>
+</div>
+</div>
+<p>We then create a <code class="docutils literal notranslate"><span class="pre">TrainerModule</span></code> object that will perform the training. This module is created automatically when using the classes <code class="docutils literal notranslate"><span class="pre">NPE</span></code> or <code class="docutils literal notranslate"><span class="pre">NLE</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trainer_maf_npe</span> <span class="o">=</span> <span class="n">TrainerModule</span><span class="p">(</span>
+    <span class="n">model_class</span><span class="o">=</span><span class="n">ConditionalMAF</span><span class="p">,</span>
+    <span class="n">model_hparams</span><span class="o">=</span><span class="n">model_hparams_maf</span><span class="p">,</span>
+    <span class="n">optimizer_hparams</span><span class="o">=</span><span class="n">optimizer_hparams</span><span class="p">,</span>
+    <span class="n">loss_fn</span><span class="o">=</span><span class="n">loss_fn</span><span class="p">,</span>
+    <span class="n">exmp_input</span><span class="o">=</span><span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)),</span>
+    <span class="n">logger_params</span><span class="o">=</span><span class="n">logger_params</span><span class="p">,</span>
+    <span class="n">debug</span><span class="o">=</span><span class="n">debug</span><span class="p">,</span>
+    <span class="n">check_val_every_epoch</span><span class="o">=</span><span class="n">check_val_every_epoch</span><span class="p">,</span>
+    <span class="n">nde_class</span><span class="o">=</span><span class="n">nde_class</span>
+<span class="p">)</span>
+
+<span class="c1">#Train the Neural Density Estimator</span>
+<span class="n">metrics_maf_npe</span> <span class="o">=</span> <span class="n">trainer_maf_npe</span><span class="o">.</span><span class="n">train_model</span><span class="p">(</span>
+    <span class="n">train_loader</span><span class="p">,</span> <span class="n">val_loader</span><span class="p">,</span> <span class="n">test_loader</span><span class="o">=</span><span class="n">test_loader</span><span class="p">,</span> <span class="n">num_epochs</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">20</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -489,9 +528,6 @@ Data shape: (50000, 3)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[!] Creating DataLoaders with batch_size 50.
-[!] Building the neural network.
-[!] Creating the Trainer module.
 Could not tabulate model:
 </pre></div></div>
 </div>
@@ -500,120 +536,42 @@ Could not tabulate model:
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-WARNING:absl:Configured `CheckpointManager` using deprecated legacy API. Please follow the instructions at https://orbax.readthedocs.io/en/latest/api_refactor.html to migrate.
+Epochs: Val loss -2.660/ Best val loss -2.687:  19%|█▉        | 97/500 [00:32&lt;02:16,  2.95it/s]
+WARNING:absl:`StandardCheckpointHandler` expects a target tree to be provided for restore. Not doing so is generally UNSAFE unless you know the present topology to be the same one as the checkpoint was saved under.
 </pre></div></div>
 </div>
-<div class="nboutput docutils container">
+<div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[!] Training the density estimator.
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-Epochs: Val loss -2.597/ Best val loss -2.615:   5%|▌         | 25/500 [01:07&lt;21:13,  2.68s/it]
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Neural network training stopped after 26 epochs.
-Early stopping with best validation metric: -2.6152846813201904
-Best model saved at epoch 5
+Neural network training stopped after 98 epochs.
+Early stopping with best validation metric: -2.687150239944458
+Best model saved at epoch 85
 Early stopping parameters: min_delta=0.001, patience=20
 </pre></div></div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
+<p>The trained model can then be used to sample from or compute the log-probability of the learned distribution.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
 </div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_maf_npe</span> <span class="o">=</span> <span class="n">trainer_maf_npe</span><span class="o">.</span><span class="n">bind_model</span><span class="p">()</span>
 
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-[!] Training loss: -2.5910401344299316
-[!] Validation loss: -2.6152846813201904
-[!] Test loss: -2.603489398956299
-</pre></div></div>
-</div>
-</section>
-<section id="Building-the-posterior-and-evaluating">
-<h2>Building the posterior and evaluating<a class="headerlink" href="#Building-the-posterior-and-evaluating" title="Link to this heading">#</a></h2>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpyro.distributions</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dist</span>
-
-<span class="n">posterior</span> <span class="o">=</span> <span class="n">inference</span><span class="o">.</span><span class="n">build_posterior</span><span class="p">(</span>
-    <span class="n">prior_distr</span><span class="o">=</span><span class="n">dist</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">2.</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.</span><span class="p">]),</span> <span class="n">high</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">]))</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-Using MCMC method: nuts_numpyro
-MCMC kwargs: {}
-[!] Posterior $p(\theta| x)$ built. The class MCMCPosterior is used to sample and evaluate the log probability.\n The sampling is performed using MCMC methods.
-</pre></div></div>
-</div>
-<p>This time, the posterior is an <code class="docutils literal notranslate"><span class="pre">MCMCPosterior</span></code>. Indeed, we learned the likelihood so an extra sampling step is required to get the posterior. <code class="docutils literal notranslate"><span class="pre">MCMCPosterior</span></code> implements the sampling step using Markov Chain Monte Carlo (MCMC) algorithm. Hopefully, the likelihood is differentiable so we can used gradient-based sampling algorithmes such as HMC or NUTS (See this <a class="reference external" href="https://arxiv.org/pdf/2001.06249">paper</a> for a review).</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Let&#39;s first create an observation</span>
+<span class="c1">#Let&#39;s first create an observation</span>
 <span class="n">obs_key</span><span class="p">,</span> <span class="n">master_key</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">master_key</span><span class="p">)</span>
 <span class="n">fiducial</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span>
 <span class="n">obs</span> <span class="o">=</span> <span class="n">simulator</span><span class="p">(</span><span class="n">fiducial</span><span class="p">,</span> <span class="n">obs_key</span><span class="p">)</span>
 
-<span class="c1">#and then sample from the posterior</span>
-<span class="n">num_samples</span> <span class="o">=</span> <span class="mi">10_000</span>
 <span class="n">sample_key</span><span class="p">,</span> <span class="n">master_key</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">master_key</span><span class="p">)</span>
-<span class="n">samples</span> <span class="o">=</span> <span class="n">posterior</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span>
-    <span class="n">x</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="n">num_samples</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">sample_key</span>
+<span class="n">samples_maf_npe</span> <span class="o">=</span> <span class="n">model_maf_npe</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span>
+    <span class="n">obs</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">sample_key</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-[[0.59638596 0.47953892 0.5699892 ]]
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-sample: 100%|██████████| 10500/10500 [00:32&lt;00:00, 325.78it/s, 3 steps of size 8.61e-01. acc. prob=0.89]
-</pre></div></div>
-</div>
-<p>The <code class="docutils literal notranslate"><span class="pre">NeuralPosterior</span></code> provides an abstract class to embedd the different posterior one can encounter when performing Implicit Likelihood Inference. Hence, the code to sample from the posterior is similar in NPE and NLE.</p>
-</section>
-<section id="Visualisation-of-the-learned-posterior">
-<h2>Visualisation of the learned posterior<a class="headerlink" href="#Visualisation-of-the-learned-posterior" title="Link to this heading">#</a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#We will use getdist to visualise the results</span>
@@ -624,12 +582,12 @@ sample: 100%|██████████| 10500/10500 [00:32&lt;00:00, 325.78
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">rf</span><span class="s1">&#39;\theta_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_dim</span><span class="p">)]</span>
 
-<span class="n">samples_gd</span> <span class="o">=</span> <span class="n">MCSamples</span><span class="p">(</span><span class="n">samples</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+<span class="n">samples_gd</span> <span class="o">=</span> <span class="n">MCSamples</span><span class="p">(</span><span class="n">samples</span><span class="o">=</span><span class="n">samples_maf_npe</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
 
 <span class="n">g</span> <span class="o">=</span> <span class="n">plots</span><span class="o">.</span><span class="n">get_subplot_plotter</span><span class="p">()</span>
 
@@ -661,76 +619,82 @@ Removed no burn in
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_nle_quickstart_18_1.png" src="../_images/examples_nle_quickstart_18_1.png" />
+<img alt="../_images/examples_training_conditional_maf_16_1.png" src="../_images/examples_training_conditional_maf_16_1.png" />
 </div>
 </div>
-</section>
-<section id="Comparison-with-reference-samples">
-<h2>Comparison with reference samples<a class="headerlink" href="#Comparison-with-reference-samples" title="Link to this heading">#</a></h2>
-<p>This case is very simple so we can build a <code class="docutils literal notranslate"><span class="pre">numpyro</span></code> model to get reference samples of the posterior using HMC.</p>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpyro</span>
-
-<span class="n">prior_dist</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">Uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">2.</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.</span><span class="p">]),</span> <span class="n">high</span><span class="o">=</span><span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">,</span> <span class="mf">2.</span><span class="p">]))</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">model</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-    <span class="n">theta</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">&quot;theta&quot;</span><span class="p">,</span> <span class="n">prior_dist</span><span class="p">)</span>
-
-    <span class="n">z</span> <span class="o">=</span> <span class="n">numpyro</span><span class="o">.</span><span class="n">deterministic</span><span class="p">(</span><span class="s2">&quot;z&quot;</span><span class="p">,</span> <span class="n">theta</span><span class="p">)</span>
-
-    <span class="n">likelihood_distr</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">z</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-    <span class="n">likelihood</span> <span class="o">=</span> <span class="n">likelihood_distr</span><span class="o">.</span><span class="n">log_prob</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">numpyro</span><span class="o">.</span><span class="n">factor</span><span class="p">(</span><span class="s2">&quot;log_likelihood&quot;</span><span class="p">,</span> <span class="n">likelihood</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
+<section id="Reloading-a-trained-network">
+<h2>Reloading a trained network<a class="headerlink" href="#Reloading-a-trained-network" title="Link to this heading">#</a></h2>
+<p>After training, it can be useful to reload a model with the trained weights to save an unnecessary step of training. This is allowed by the class <code class="docutils literal notranslate"><span class="pre">TrainerModule</span></code>.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">numpyro.infer</span><span class="w"> </span><span class="kn">import</span> <span class="n">MCMC</span><span class="p">,</span> <span class="n">NUTS</span>
-
-<span class="n">nuts_kernel</span> <span class="o">=</span> <span class="n">NUTS</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">adapt_step_size</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">mcmc</span> <span class="o">=</span> <span class="n">MCMC</span><span class="p">(</span><span class="n">nuts_kernel</span><span class="p">,</span> <span class="n">num_warmup</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="mi">10_000</span><span class="p">)</span>
-
-<span class="n">mcmc</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span> <span class="n">data</span><span class="o">=</span><span class="n">obs</span><span class="p">)</span>
-
-<span class="n">reference_samples</span> <span class="o">=</span> <span class="n">mcmc</span><span class="o">.</span><span class="n">get_samples</span><span class="p">()[</span><span class="s2">&quot;theta&quot;</span><span class="p">]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trainer_maf_npe</span> <span class="o">=</span> <span class="n">TrainerModule</span><span class="o">.</span><span class="n">load_from_checkpoints</span><span class="p">(</span>
+    <span class="n">model_class</span><span class="o">=</span><span class="n">ConditionalMAF</span><span class="p">,</span>
+    <span class="n">checkpoint</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">CHECKPOINT_PATH</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;/ConditionalMAF/version_0/&quot;</span><span class="p">,</span>
+    <span class="n">exmp_input</span><span class="o">=</span><span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">train_loader</span><span class="p">))</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
+<div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-sample: 100%|██████████| 10500/10500 [00:32&lt;00:00, 325.15it/s, 3 steps of size 9.53e-01. acc. prob=0.89]
+WARNING:absl:Item &#34;default&#34; was found in the checkpoint, but could not be restored. Please provide a `CheckpointHandlerRegistry`, or call `restore` with an appropriate `CheckpointArgs` subclass.
+WARNING:absl:Item &#34;default&#34; was found in the checkpoint, but could not be restored. Please provide a `CheckpointHandlerRegistry`, or call `restore` with an appropriate `CheckpointArgs` subclass.
+WARNING:absl:`StandardCheckpointHandler` expects a target tree to be provided for restore. Not doing so is generally UNSAFE unless you know the present topology to be the same one as the checkpoint was saved under.
 </pre></div></div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Could not tabulate model:
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_maf_npe_ckpt</span> <span class="o">=</span> <span class="n">trainer_maf_npe</span><span class="o">.</span><span class="n">bind_model</span><span class="p">()</span>
+
+<span class="n">samples_maf_npe_ckpt</span> <span class="o">=</span> <span class="n">model_maf_npe_ckpt</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span>
+    <span class="n">obs</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">sample_key</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy.testing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">npt</span>
+
+<span class="n">npt</span><span class="o">.</span><span class="n">assert_array_equal</span><span class="p">(</span><span class="n">samples_maf_npe</span><span class="p">,</span> <span class="n">samples_maf_npe_ckpt</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">rf</span><span class="s1">&#39;\theta_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_dim</span><span class="p">)]</span>
 
-<span class="n">samples_gd</span> <span class="o">=</span> <span class="n">MCSamples</span><span class="p">(</span><span class="n">samples</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
-<span class="n">reference_samples_gd</span> <span class="o">=</span> <span class="n">MCSamples</span><span class="p">(</span><span class="n">samples</span><span class="o">=</span><span class="n">reference_samples</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+<span class="n">samples_gd</span> <span class="o">=</span> <span class="n">MCSamples</span><span class="p">(</span><span class="n">samples</span><span class="o">=</span><span class="n">samples_maf_npe_ckpt</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
 
 <span class="n">g</span> <span class="o">=</span> <span class="n">plots</span><span class="o">.</span><span class="n">get_subplot_plotter</span><span class="p">()</span>
 
 <span class="n">g</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">figure_legend_frame</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="n">g</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">alpha_filled_add</span> <span class="o">=</span> <span class="mf">0.4</span>
 
-<span class="n">g</span><span class="o">.</span><span class="n">triangle_plot</span><span class="p">([</span><span class="n">samples_gd</span><span class="p">,</span> <span class="n">reference_samples_gd</span><span class="p">],</span> <span class="n">filled</span><span class="o">=</span><span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">],</span>
+<span class="n">g</span><span class="o">.</span><span class="n">triangle_plot</span><span class="p">([</span><span class="n">samples_gd</span><span class="p">],</span> <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="n">line_args</span><span class="o">=</span><span class="p">[</span>
-                    <span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;blue&#39;</span><span class="p">},</span>
-                    <span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;black&#39;</span><span class="p">}</span>
+                    <span class="p">{</span><span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="s1">&#39;blue&#39;</span><span class="p">}</span>
                 <span class="p">],</span>
-                <span class="n">legend_labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;NLE&#39;</span><span class="p">,</span> <span class="s1">&#39;Reference samples&#39;</span><span class="p">],</span>
-                <span class="n">contour_colors</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">],</span>
+                <span class="n">contour_colors</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;blue&#39;</span><span class="p">],</span>
                 <span class="n">markers</span><span class="o">=</span><span class="p">{</span>
                     <span class="n">label</span><span class="p">:</span> <span class="n">val</span> <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">fiducial</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
                 <span class="p">})</span>
@@ -745,22 +709,16 @@ sample: 100%|██████████| 10500/10500 [00:32&lt;00:00, 325.15
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Removed no burn in
-Removed no burn in
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_nle_quickstart_23_1.png" src="../_images/examples_nle_quickstart_23_1.png" />
+<img alt="../_images/examples_training_conditional_maf_22_1.png" src="../_images/examples_training_conditional_maf_22_1.png" />
 </div>
 </div>
-<p>We see here that our posterior samples are really close to the reference obtained using the true likelihood and MCMC sampling.</p>
-<p>Let’s also lay the stres on the fact the inference is also <em>amortized</em>. No training is required when using a different data vector!</p>
-</section>
-<section id="Next-steps">
-<h2>Next steps<a class="headerlink" href="#Next-steps" title="Link to this heading">#</a></h2>
-<p>In the following example, we will show how NPE and NLE perform on a more complex target posterior.</p>
+<p>We recover the same posterior as the same observation has been used with the same seed and that the weight of the network have been recovered correctly.</p>
 </section>
 </section>
 
@@ -776,20 +734,20 @@ Removed no burn in
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="getting_started.html"
+       href="nle_quickstart.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Getting started with <code class="docutils literal notranslate"><span class="pre">JaxILI</span></code></p>
+        <p class="prev-next-title">Neural Likelihood Estimation Quickstart</p>
       </div>
     </a>
     <a class="right-next"
-       href="training_conditional_maf.html"
+       href="../user_guide/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Training a Conditional MAF</p>
+        <p class="prev-next-title">User guide</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -809,11 +767,7 @@ Removed no burn in
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Training">Training</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Building-the-posterior-and-evaluating">Building the posterior and evaluating</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Visualisation-of-the-learned-posterior">Visualisation of the learned posterior</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Comparison-with-reference-samples">Comparison with reference samples</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Next-steps">Next steps</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Reloading-a-trained-network">Reloading a trained network</a></li>
 </ul>
   </nav></div>
 

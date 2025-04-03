@@ -160,6 +160,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples/index.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="examples/getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">JaxILI</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/nle_quickstart.html">Neural Likelihood Estimation Quickstart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/training_conditional_maf.html">Training a Conditional MAF</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="user_guide/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -401,6 +402,12 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="jaxili.compressor.html#jaxili.compressor.CNN2DCompressor.scope"><code class="docutils literal notranslate"><span class="pre">CNN2DCompressor.scope</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="jaxili.compressor.html#jaxili.compressor.Identity"><code class="docutils literal notranslate"><span class="pre">Identity</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.compressor.html#jaxili.compressor.Identity.name"><code class="docutils literal notranslate"><span class="pre">Identity.name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.compressor.html#jaxili.compressor.Identity.parent"><code class="docutils literal notranslate"><span class="pre">Identity.parent</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.compressor.html#jaxili.compressor.Identity.scope"><code class="docutils literal notranslate"><span class="pre">Identity.scope</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="jaxili.compressor.html#jaxili.compressor.MLPCompressor"><code class="docutils literal notranslate"><span class="pre">MLPCompressor</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="jaxili.compressor.html#jaxili.compressor.MLPCompressor.activation"><code class="docutils literal notranslate"><span class="pre">MLPCompressor.activation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="jaxili.compressor.html#jaxili.compressor.MLPCompressor.hidden_size"><code class="docutils literal notranslate"><span class="pre">MLPCompressor.hidden_size</span></code></a></li>
@@ -408,6 +415,14 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="jaxili.compressor.html#jaxili.compressor.MLPCompressor.output_size"><code class="docutils literal notranslate"><span class="pre">MLPCompressor.output_size</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="jaxili.compressor.html#jaxili.compressor.MLPCompressor.parent"><code class="docutils literal notranslate"><span class="pre">MLPCompressor.parent</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="jaxili.compressor.html#jaxili.compressor.MLPCompressor.scope"><code class="docutils literal notranslate"><span class="pre">MLPCompressor.scope</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="jaxili.compressor.html#jaxili.compressor.Standardizer"><code class="docutils literal notranslate"><span class="pre">Standardizer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.compressor.html#jaxili.compressor.Standardizer.mean"><code class="docutils literal notranslate"><span class="pre">Standardizer.mean</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.compressor.html#jaxili.compressor.Standardizer.name"><code class="docutils literal notranslate"><span class="pre">Standardizer.name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.compressor.html#jaxili.compressor.Standardizer.parent"><code class="docutils literal notranslate"><span class="pre">Standardizer.parent</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.compressor.html#jaxili.compressor.Standardizer.scope"><code class="docutils literal notranslate"><span class="pre">Standardizer.scope</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.compressor.html#jaxili.compressor.Standardizer.std"><code class="docutils literal notranslate"><span class="pre">Standardizer.std</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -486,12 +501,6 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="jaxili.model.html#jaxili.model.ConditionalRealNVP.scope"><code class="docutils literal notranslate"><span class="pre">ConditionalRealNVP.scope</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="jaxili.model.html#jaxili.model.Identity"><code class="docutils literal notranslate"><span class="pre">Identity</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="jaxili.model.html#jaxili.model.Identity.name"><code class="docutils literal notranslate"><span class="pre">Identity.name</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxili.model.html#jaxili.model.Identity.parent"><code class="docutils literal notranslate"><span class="pre">Identity.parent</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxili.model.html#jaxili.model.Identity.scope"><code class="docutils literal notranslate"><span class="pre">Identity.scope</span></code></a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="jaxili.model.html#jaxili.model.MAFLayer"><code class="docutils literal notranslate"><span class="pre">MAFLayer</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="jaxili.model.html#jaxili.model.MAFLayer.activation"><code class="docutils literal notranslate"><span class="pre">MAFLayer.activation</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="jaxili.model.html#jaxili.model.MAFLayer.backward"><code class="docutils literal notranslate"><span class="pre">MAFLayer.backward()</span></code></a></li>
@@ -565,14 +574,6 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="jaxili.model.html#jaxili.model.NDE_w_Standardization.unstandardize"><code class="docutils literal notranslate"><span class="pre">NDE_w_Standardization.unstandardize()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="jaxili.model.html#jaxili.model.Standardizer"><code class="docutils literal notranslate"><span class="pre">Standardizer</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="jaxili.model.html#jaxili.model.Standardizer.mean"><code class="docutils literal notranslate"><span class="pre">Standardizer.mean</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxili.model.html#jaxili.model.Standardizer.name"><code class="docutils literal notranslate"><span class="pre">Standardizer.name</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxili.model.html#jaxili.model.Standardizer.parent"><code class="docutils literal notranslate"><span class="pre">Standardizer.parent</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxili.model.html#jaxili.model.Standardizer.scope"><code class="docutils literal notranslate"><span class="pre">Standardizer.scope</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="jaxili.model.html#jaxili.model.Standardizer.std"><code class="docutils literal notranslate"><span class="pre">Standardizer.std</span></code></a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="jaxili.train.html">jaxili.train module</a><ul>
@@ -589,6 +590,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="jaxili.train.html#jaxili.train.TrainerModule.eval_model"><code class="docutils literal notranslate"><span class="pre">TrainerModule.eval_model()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="jaxili.train.html#jaxili.train.TrainerModule.generate_config"><code class="docutils literal notranslate"><span class="pre">TrainerModule.generate_config()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="jaxili.train.html#jaxili.train.TrainerModule.init_apply_fn"><code class="docutils literal notranslate"><span class="pre">TrainerModule.init_apply_fn()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.train.html#jaxili.train.TrainerModule.init_checkpointer"><code class="docutils literal notranslate"><span class="pre">TrainerModule.init_checkpointer()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="jaxili.train.html#jaxili.train.TrainerModule.init_logger"><code class="docutils literal notranslate"><span class="pre">TrainerModule.init_logger()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="jaxili.train.html#jaxili.train.TrainerModule.init_model"><code class="docutils literal notranslate"><span class="pre">TrainerModule.init_model()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="jaxili.train.html#jaxili.train.TrainerModule.init_optimizer"><code class="docutils literal notranslate"><span class="pre">TrainerModule.init_optimizer()</span></code></a></li>
@@ -605,6 +607,7 @@ document.write(`
 <li class="toctree-l3"><a class="reference internal" href="jaxili.train.html#jaxili.train.TrainerModule.tracker"><code class="docutils literal notranslate"><span class="pre">TrainerModule.tracker()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="jaxili.train.html#jaxili.train.TrainerModule.train_epoch"><code class="docutils literal notranslate"><span class="pre">TrainerModule.train_epoch()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="jaxili.train.html#jaxili.train.TrainerModule.train_model"><code class="docutils literal notranslate"><span class="pre">TrainerModule.train_model()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="jaxili.train.html#jaxili.train.TrainerModule.write_config"><code class="docutils literal notranslate"><span class="pre">TrainerModule.write_config()</span></code></a></li>
 </ul>
 </li>
 </ul>

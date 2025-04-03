@@ -161,6 +161,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../examples/index.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../examples/getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">JaxILI</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../examples/nle_quickstart.html">Neural Likelihood Estimation Quickstart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/training_conditional_maf.html">Training a Conditional MAF</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../user_guide/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -295,6 +296,10 @@ document.write(`
 <span class="sd">This modules provides a Neural Likelihood Estimation (NLE) class to train a neural density estimator to perform NLE.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
 
@@ -312,16 +317,16 @@ document.write(`
 <span class="kn">from</span><span class="w"> </span><span class="nn">jaxili.model</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
     <span class="n">ConditionalMAF</span><span class="p">,</span>
     <span class="n">ConditionalRealNVP</span><span class="p">,</span>
-    <span class="n">Identity</span><span class="p">,</span>
     <span class="n">MixtureDensityNetwork</span><span class="p">,</span>
     <span class="n">NDE_w_Standardization</span><span class="p">,</span>
-    <span class="n">Standardizer</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxili.compressor</span><span class="w"> </span><span class="kn">import</span> <span class="n">Identity</span><span class="p">,</span> <span class="n">Standardizer</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">jaxili.posterior</span><span class="w"> </span><span class="kn">import</span> <span class="n">MCMCPosterior</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">jaxili.posterior.mcmc_posterior</span><span class="w"> </span><span class="kn">import</span> <span class="n">nuts_numpyro_kwargs_default</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">jaxili.train</span><span class="w"> </span><span class="kn">import</span> <span class="n">TrainerModule</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">jaxili.utils</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">jaxili.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_density_estimator</span><span class="p">,</span> <span class="n">create_data_loader</span><span class="p">,</span> <span class="n">validate_theta_x</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">jaxili.inventory.func_dict</span><span class="w"> </span><span class="kn">import</span> <span class="n">jax_nn_dict</span><span class="p">,</span> <span class="n">jaxili_loss_dict</span><span class="p">,</span> <span class="n">jaxili_nn_dict</span>
 
 <span class="n">default_maf_hparams</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;n_layers&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
@@ -588,7 +593,9 @@ document.write(`
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">z_score_theta</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
         <span class="n">z_score_x</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-        <span class="n">embedding_net</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span> <span class="o">=</span> <span class="n">Identity</span><span class="p">(),</span>
+        <span class="n">embedding_net</span><span class="p">:</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span> <span class="o">=</span> <span class="n">Identity</span><span class="p">,</span>
+        <span class="n">embedding_hparams</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Build the neural network for the density estimator.</span>
@@ -629,11 +636,29 @@ document.write(`
         <span class="k">if</span> <span class="n">z_score_theta</span><span class="p">:</span>
             <span class="n">shift</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_train_dataset</span><span class="p">[:][</span><span class="mi">0</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
             <span class="n">scale</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_train_dataset</span><span class="p">[:][</span><span class="mi">0</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">min_std</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;min_std&quot;</span><span class="p">,</span> <span class="mf">1e-14</span><span class="p">)</span>
+            <span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">scale</span> <span class="o">&lt;</span> <span class="n">min_std</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">min_std</span><span class="p">)</span>
             <span class="n">standardizer</span> <span class="o">=</span> <span class="n">Standardizer</span><span class="p">(</span><span class="n">shift</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">standardizer</span> <span class="o">=</span> <span class="n">Identity</span><span class="p">()</span>
 
+        <span class="k">if</span> <span class="n">embedding_net</span> <span class="o">==</span> <span class="n">Identity</span><span class="p">:</span>
+            <span class="n">embedding_net</span> <span class="o">=</span> <span class="n">Identity</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">embedding_hparams</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                    <span class="s2">&quot;An embedding net has been specified but not its hyperparameters. Creating an embedding of the instance `Identity` instead.&quot;</span>
+                <span class="p">)</span>
+                <span class="n">embedding_net</span> <span class="o">=</span> <span class="n">Identity</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">embedding_net</span> <span class="o">=</span> <span class="n">embedding_net</span><span class="p">(</span><span class="o">**</span><span class="n">embedding_hparams</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">_embedding_net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span><span class="n">standardizer</span><span class="p">,</span> <span class="n">embedding_net</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">embedding_net</span><span class="p">,</span> <span class="n">Identity</span><span class="p">):</span>
+            <span class="n">n_cond</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dim_cond</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n_cond</span> <span class="o">=</span> <span class="n">embedding_net</span><span class="o">.</span><span class="n">output_size</span>
 
         <span class="c1"># Check if z-score is required for x.</span>
         <span class="n">shift</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dim_params</span><span class="p">)</span>
@@ -642,13 +667,15 @@ document.write(`
         <span class="k">if</span> <span class="n">z_score_x</span><span class="p">:</span>
             <span class="n">shift</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_train_dataset</span><span class="p">[:][</span><span class="mi">1</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
             <span class="n">scale</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_train_dataset</span><span class="p">[:][</span><span class="mi">1</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">min_std</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;min_std&quot;</span><span class="p">,</span> <span class="mf">1e-14</span><span class="p">)</span>
+            <span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">scale</span> <span class="o">&lt;</span> <span class="n">min_std</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">min_std</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_transformation_hparams</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;shift&quot;</span><span class="p">:</span> <span class="n">shift</span><span class="p">,</span> <span class="s2">&quot;scale&quot;</span><span class="p">:</span> <span class="n">scale</span><span class="p">}</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_transformation</span> <span class="o">=</span> <span class="n">distrax</span><span class="o">.</span><span class="n">ScalarAffine</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span> <span class="n">shift</span><span class="o">=</span><span class="n">shift</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_model_hparams</span><span class="p">[</span><span class="s2">&quot;n_in&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dim_params</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_model_hparams</span><span class="p">[</span><span class="s2">&quot;n_cond&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dim_cond</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model_hparams</span><span class="p">[</span><span class="s2">&quot;n_cond&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_cond</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nde</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_class</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_model_hparams</span><span class="p">)</span>
 
         <span class="n">model</span> <span class="o">=</span> <span class="n">NDE_w_Standardization</span><span class="p">(</span>
@@ -695,11 +722,13 @@ document.write(`
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="n">z_score_theta</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;z_score_theta&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
             <span class="n">z_score_x</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;z_score_x&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-            <span class="n">embedding_net</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;embedding_net&quot;</span><span class="p">,</span> <span class="n">Identity</span><span class="p">())</span>
+            <span class="n">embedding_net</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;embedding_net&quot;</span><span class="p">,</span> <span class="n">Identity</span><span class="p">)</span>
+            <span class="n">embedding_net_hparams</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;embedding_hparams&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
             <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_neural_network</span><span class="p">(</span>
                 <span class="n">z_score_theta</span><span class="o">=</span><span class="n">z_score_theta</span><span class="p">,</span>
                 <span class="n">z_score_x</span><span class="o">=</span><span class="n">z_score_x</span><span class="p">,</span>
                 <span class="n">embedding_net</span><span class="o">=</span><span class="n">embedding_net</span><span class="p">,</span>
+                <span class="n">embedding_hparams</span><span class="o">=</span><span class="n">embedding_net_hparams</span><span class="p">,</span>
             <span class="p">)</span>
 
         <span class="n">nde_w_std_hparams</span> <span class="o">=</span> <span class="p">{</span>
@@ -730,11 +759,25 @@ document.write(`
             <span class="n">nde_class</span><span class="o">=</span><span class="s2">&quot;NLE&quot;</span><span class="p">,</span>
         <span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;nde_hparams&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_hparams</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;nde_hparams&quot;</span><span class="p">:</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model_hparams</span><span class="p">)})</span>
+        <span class="c1"># Check if there is an activation function to rename</span>
+        <span class="k">if</span> <span class="s2">&quot;activation&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_hparams</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;nde_hparams&quot;</span><span class="p">][</span><span class="s2">&quot;activation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">config</span><span class="p">[</span>
+                <span class="s2">&quot;nde_hparams&quot;</span>
+            <span class="p">][</span><span class="s2">&quot;activation&quot;</span><span class="p">]</span><span class="o">.</span><span class="vm">__name__</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-            <span class="p">{</span><span class="s2">&quot;transformation_hparams&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transformation_hparams</span><span class="p">}</span>
+            <span class="p">{</span><span class="s2">&quot;transformation_hparams&quot;</span><span class="p">:</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_transformation_hparams</span><span class="p">)}</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">init_logger</span><span class="p">(</span><span class="n">logger_params</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="n">embedding_net_hparams</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                <span class="p">{</span><span class="s2">&quot;embedding_hparams&quot;</span><span class="p">:</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">embedding_net_hparams</span><span class="p">)}</span>
+            <span class="p">)</span>
+            <span class="c1"># Check if there is an activation function to rename</span>
+            <span class="k">if</span> <span class="s2">&quot;activation&quot;</span> <span class="ow">in</span> <span class="n">embedding_net_hparams</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;embedding_hparams&quot;</span><span class="p">][</span><span class="s2">&quot;activation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;embedding_hparams&quot;</span><span class="p">][</span><span class="s2">&quot;activation&quot;</span><span class="p">]</span><span class="o">.</span><span class="vm">__name__</span>
+                <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">write_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">log_dir</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="NLE.train">
@@ -763,6 +806,19 @@ document.write(`
 <span class="sd">            Maximum number of epochs to train. Default is 2**31 - 1.</span>
 <span class="sd">        check_val_every_epoch: int, optional</span>
 <span class="sd">            Frequency at which to check the validation loss. Default is 1.</span>
+<span class="sd">        **kwargs : dict, optional</span>
+<span class="sd">            Additional keyword arguments for training customization:</span>
+
+<span class="sd">            - optimizer_name (str): Name of the optimizer to use (default: &#39;adam&#39;).</span>
+<span class="sd">            - gradient_clip (float): Value for gradient clipping (default: 5.0).</span>
+<span class="sd">            - warmup (float): Warmup proportion for learning rate scheduling (default: 0.1).</span>
+<span class="sd">            - weight_decay (float): Weight decay (L2 regularization) (default: 0.0).</span>
+<span class="sd">            - checkpoint_path (str): Directory to save training checkpoints (default: &#39;checkpoints/&#39;).</span>
+<span class="sd">            - log_dir (str or None): Directory for logging (default: None).</span>
+<span class="sd">            - logger_type (str): Type of logger to use (default: &#39;TensorBoard&#39;).</span>
+<span class="sd">            - seed (int): Random seed for reproducibility (default: 42).</span>
+<span class="sd">            - debug (bool): Whether to run in debug mode (default: False).</span>
+<span class="sd">            - min_delta (float): Minimum change in validation loss to qualify as improvement (default: 1e-3).</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -893,6 +949,158 @@ document.write(`
             <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">posterior</span></div>
+
+
+<div class="viewcode-block" id="NLE.load_from_checkpoints">
+<a class="viewcode-back" href="../../../jaxili.inference.nle.html#jaxili.inference.nle.NLE.load_from_checkpoints">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_from_checkpoints</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span> <span class="n">checkpoint</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">exmp_input</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">embedding_net_class</span><span class="o">=</span><span class="n">Identity</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a NLE object where the TrainerModule is loading the already existing weights for the neural network.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nde_class: NDENetwork</span>
+<span class="sd">            Class used to create the neural density estimator</span>
+<span class="sd">        checkpoint: str</span>
+<span class="sd">            Folder in which the checkpoint and hyperparameter file is stored</span>
+<span class="sd">        exmp_input : Any</span>
+<span class="sd">            An input to the model with which the shapes are inferred.</span>
+<span class="sd">        embedding_net_class: nn.Module</span>
+<span class="sd">            Class used to create the embedding net. (Default: Identity)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        A NLE object containing a model with the pre-trained weights loaded.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">hparams_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">,</span> <span class="s2">&quot;hparams.json&quot;</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">hparams_file</span><span class="p">),</span> <span class="s2">&quot;Could not find hparams file.&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">hparams_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">hparams</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="n">hparams</span><span class="p">[</span><span class="s2">&quot;model_class&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">NDE_w_Standardization</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="p">),</span> <span class="s2">&quot;The model has not been trained with NDE_w_Standardization. Check the checkpoint path is correct.&quot;</span>
+        <span class="n">hparams</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;model_class&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Check that the embedding class name is correct.</span>
+        <span class="n">embedding_str</span> <span class="o">=</span> <span class="n">hparams</span><span class="p">[</span><span class="s2">&quot;model_hparams&quot;</span><span class="p">][</span><span class="s2">&quot;embedding_net&quot;</span><span class="p">]</span>
+        <span class="c1"># Find all class names in the layers list</span>
+        <span class="n">class_names</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(\w+)\s*\(&quot;</span><span class="p">,</span> <span class="n">embedding_str</span><span class="p">)</span>
+
+        <span class="c1"># The first entry is &quot;Sequential&quot;, so we take the next two</span>
+        <span class="n">embedding_classes</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">class_</span> <span class="k">for</span> <span class="n">class_</span> <span class="ow">in</span> <span class="n">class_names</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">class_</span> <span class="o">!=</span> <span class="s2">&quot;Array&quot;</span>
+        <span class="p">]</span>  <span class="c1"># Skip &quot;Sequential&quot;</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="n">embedding_classes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">embedding_net_class</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="p">),</span> <span class="s2">&quot;The embedding class does not match. Check that you are using the correct architecture.&quot;</span>
+
+        <span class="c1"># Check if the loss function is correct.</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="n">hparams</span><span class="p">[</span><span class="s2">&quot;loss_fn&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">jaxili_loss_dict</span>
+        <span class="p">),</span> <span class="s2">&quot;Unknown loss function. Check that the loss function you used comes from `jax.nn`.&quot;</span>
+        <span class="n">hparams</span><span class="p">[</span><span class="s2">&quot;loss_fn&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">jaxili_loss_dict</span><span class="p">[</span><span class="n">hparams</span><span class="p">[</span><span class="s2">&quot;loss_fn&quot;</span><span class="p">]]</span>
+        <span class="c1"># Create the NDE</span>
+        <span class="c1"># Extract the nde string</span>
+        <span class="n">nde_str</span> <span class="o">=</span> <span class="n">hparams</span><span class="p">[</span><span class="s2">&quot;model_hparams&quot;</span><span class="p">][</span><span class="s2">&quot;nde&quot;</span><span class="p">]</span>
+
+        <span class="c1"># Use regex to extract the class name</span>
+        <span class="n">nde_class_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(\w+)\s*\(&quot;</span><span class="p">,</span> <span class="n">nde_str</span><span class="p">)</span>
+
+        <span class="c1"># Get the class name</span>
+        <span class="n">nde_class_name</span> <span class="o">=</span> <span class="n">nde_class_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">nde_class_match</span> <span class="k">else</span> <span class="kc">None</span>
+
+        <span class="n">nde_class</span> <span class="o">=</span> <span class="n">jaxili_nn_dict</span><span class="p">[</span><span class="n">nde_class_name</span><span class="p">]</span>
+        <span class="n">nde_hparams</span> <span class="o">=</span> <span class="n">hparams</span><span class="p">[</span><span class="s2">&quot;nde_hparams&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;activation&quot;</span> <span class="ow">in</span> <span class="n">nde_hparams</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">nde_hparams</span><span class="p">[</span><span class="s2">&quot;activation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">jax_nn_dict</span><span class="p">[</span><span class="n">nde_hparams</span><span class="p">[</span><span class="s2">&quot;activation&quot;</span><span class="p">]]</span>
+
+        <span class="c1"># Create object from the class NLE</span>
+        <span class="n">inference</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">model_class</span><span class="o">=</span><span class="n">nde_class</span><span class="p">,</span> <span class="n">model_hparams</span><span class="o">=</span><span class="n">nde_hparams</span><span class="p">,</span> <span class="n">loss_fn</span><span class="o">=</span><span class="n">hparams</span><span class="p">[</span><span class="s2">&quot;loss_fn&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Create the NDE</span>
+        <span class="n">inference</span><span class="o">.</span><span class="n">_nde</span> <span class="o">=</span> <span class="n">nde_class</span><span class="p">(</span><span class="o">**</span><span class="n">nde_hparams</span><span class="p">)</span>
+
+        <span class="c1"># Regenerate the embedding net</span>
+        <span class="k">if</span> <span class="n">embedding_classes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Identity&quot;</span><span class="p">:</span>
+            <span class="n">standardizer</span> <span class="o">=</span> <span class="n">Identity</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">embedding_classes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Standardizer&quot;</span><span class="p">:</span>
+            <span class="n">embedding_net_str</span> <span class="o">=</span> <span class="n">hparams</span><span class="p">[</span><span class="s2">&quot;model_hparams&quot;</span><span class="p">][</span><span class="s2">&quot;embedding_net&quot;</span><span class="p">]</span>
+
+            <span class="c1"># Regular expressions to extract mean and std arrays</span>
+            <span class="n">mean_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;mean\s*=\s*Array\((\[.*?\])&quot;</span><span class="p">,</span> <span class="n">embedding_net_str</span><span class="p">)</span>
+            <span class="n">std_match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;std\s*=\s*Array\((\[.*?\])&quot;</span><span class="p">,</span> <span class="n">embedding_net_str</span><span class="p">)</span>
+
+            <span class="c1"># Convert extracted values into NumPy arrays</span>
+            <span class="n">mean_array</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">mean_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;[]&quot;</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">mean_match</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">)</span>
+            <span class="n">std_array</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">std_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;[]&quot;</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">std_match</span>
+                <span class="k">else</span> <span class="kc">None</span>
+            <span class="p">)</span>
+
+            <span class="n">standardizer</span> <span class="o">=</span> <span class="n">Standardizer</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">mean_array</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="n">std_array</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;The first class of the embedding net should be `Identity` or `Standardizer`.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">embedding_classes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;Identity&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;embedding_hparams&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">hparams</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;The embedding net hyperparameters can&#39;t be find. Check that you are using the correct checkpoint path.&quot;</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;activation&quot;</span> <span class="ow">in</span> <span class="n">hparams</span><span class="p">[</span><span class="s2">&quot;embedding_hparams&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">hparams</span><span class="p">[</span><span class="s2">&quot;embedding_hparams&quot;</span><span class="p">][</span><span class="s2">&quot;activation&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">jax_nn_dict</span><span class="p">[</span>
+                    <span class="n">hparams</span><span class="p">[</span><span class="s2">&quot;embedding_hparams&quot;</span><span class="p">][</span><span class="s2">&quot;activation&quot;</span><span class="p">]</span>
+                <span class="p">]</span>
+            <span class="n">embedding_net</span> <span class="o">=</span> <span class="n">embedding_net_class</span><span class="p">(</span><span class="o">**</span><span class="n">hparams</span><span class="p">[</span><span class="s2">&quot;embedding_hparams&quot;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">embedding_net</span> <span class="o">=</span> <span class="n">Identity</span><span class="p">()</span>
+
+        <span class="n">inference</span><span class="o">.</span><span class="n">_embedding_net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">layers</span><span class="o">=</span><span class="p">[</span><span class="n">standardizer</span><span class="p">,</span> <span class="n">embedding_net</span><span class="p">])</span>
+
+        <span class="c1"># Regenerate the transformation of the parameters</span>
+        <span class="n">shift_str</span> <span class="o">=</span> <span class="n">hparams</span><span class="p">[</span><span class="s2">&quot;transformation_hparams&quot;</span><span class="p">][</span><span class="s2">&quot;shift&quot;</span><span class="p">]</span>
+        <span class="n">shift_list</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">shift_str</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;[]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
+
+        <span class="n">scale_str</span> <span class="o">=</span> <span class="n">hparams</span><span class="p">[</span><span class="s2">&quot;transformation_hparams&quot;</span><span class="p">][</span><span class="s2">&quot;scale&quot;</span><span class="p">]</span>
+        <span class="n">scale_list</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">scale_str</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;[]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
+
+        <span class="n">inference</span><span class="o">.</span><span class="n">_transformation</span> <span class="o">=</span> <span class="n">distrax</span><span class="o">.</span><span class="n">ScalarAffine</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">shift_list</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">scale_list</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">model_hparams</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;nde&quot;</span><span class="p">:</span> <span class="n">inference</span><span class="o">.</span><span class="n">_nde</span><span class="p">,</span>
+            <span class="s2">&quot;embedding_net&quot;</span><span class="p">:</span> <span class="n">inference</span><span class="o">.</span><span class="n">_embedding_net</span><span class="p">,</span>
+            <span class="s2">&quot;transformation&quot;</span><span class="p">:</span> <span class="n">inference</span><span class="o">.</span><span class="n">_transformation</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">hparams</span><span class="p">[</span><span class="s2">&quot;logger_params&quot;</span><span class="p">]:</span>
+            <span class="n">hparams</span><span class="p">[</span><span class="s2">&quot;logger_params&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">hparams</span><span class="p">[</span><span class="s2">&quot;logger_params&quot;</span><span class="p">][</span><span class="s2">&quot;log_dir&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">checkpoint</span>
+        <span class="n">hparams</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;model_hparams&quot;</span><span class="p">)</span>
+
+        <span class="n">inference</span><span class="o">.</span><span class="n">trainer</span> <span class="o">=</span> <span class="n">TrainerModule</span><span class="p">(</span>
+            <span class="n">model_class</span><span class="o">=</span><span class="n">NDE_w_Standardization</span><span class="p">,</span>
+            <span class="n">exmp_input</span><span class="o">=</span><span class="n">exmp_input</span><span class="p">,</span>
+            <span class="n">model_hparams</span><span class="o">=</span><span class="n">model_hparams</span><span class="p">,</span>
+            <span class="n">nde_class</span><span class="o">=</span><span class="s2">&quot;NLE&quot;</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">hparams</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">inference</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">load_model</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">inference</span></div>
 </div>
 
 </pre></div>

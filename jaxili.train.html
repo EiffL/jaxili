@@ -162,6 +162,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples/index.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="examples/getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">JaxILI</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/nle_quickstart.html">Neural Likelihood Estimation Quickstart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/training_conditional_maf.html">Training a Conditional MAF</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="user_guide/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -348,6 +349,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.eval_model"><code class="docutils literal notranslate"><span class="pre">TrainerModule.eval_model()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.generate_config"><code class="docutils literal notranslate"><span class="pre">TrainerModule.generate_config()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.init_apply_fn"><code class="docutils literal notranslate"><span class="pre">TrainerModule.init_apply_fn()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.init_checkpointer"><code class="docutils literal notranslate"><span class="pre">TrainerModule.init_checkpointer()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.init_logger"><code class="docutils literal notranslate"><span class="pre">TrainerModule.init_logger()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.init_model"><code class="docutils literal notranslate"><span class="pre">TrainerModule.init_model()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.init_optimizer"><code class="docutils literal notranslate"><span class="pre">TrainerModule.init_optimizer()</span></code></a></li>
@@ -364,6 +366,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.tracker"><code class="docutils literal notranslate"><span class="pre">TrainerModule.tracker()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.train_epoch"><code class="docutils literal notranslate"><span class="pre">TrainerModule.train_epoch()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.train_model"><code class="docutils literal notranslate"><span class="pre">TrainerModule.train_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.write_config"><code class="docutils literal notranslate"><span class="pre">TrainerModule.write_config()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -455,53 +458,59 @@ Keep an rng state for dropout or init.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.init_apply_fn" title="jaxili.train.TrainerModule.init_apply_fn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_apply_fn</span></code></a>()</p></td>
 <td><p>Initialize a default apply function for the model.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.init_logger" title="jaxili.train.TrainerModule.init_logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_logger</span></code></a>([logger_params])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.init_checkpointer" title="jaxili.train.TrainerModule.init_checkpointer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_checkpointer</span></code></a>()</p></td>
+<td><p>Initialize the checkpointer to save the model.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.init_logger" title="jaxili.train.TrainerModule.init_logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_logger</span></code></a>([logger_params])</p></td>
 <td><p>Initialize the logger and created a logging directory.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.init_model" title="jaxili.train.TrainerModule.init_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_model</span></code></a>(exmp_input)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.init_model" title="jaxili.train.TrainerModule.init_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_model</span></code></a>(exmp_input)</p></td>
 <td><p>Create an initial training state with newly generated network parameters.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.init_optimizer" title="jaxili.train.TrainerModule.init_optimizer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_optimizer</span></code></a>(num_epochs, num_steps_per_epoch)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.init_optimizer" title="jaxili.train.TrainerModule.init_optimizer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_optimizer</span></code></a>(num_epochs, num_steps_per_epoch)</p></td>
 <td><p>Initialize the optimizer and learning rate scheduler.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.is_new_model_better" title="jaxili.train.TrainerModule.is_new_model_better"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_new_model_better</span></code></a>(new_metrics, old_metrics)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.is_new_model_better" title="jaxili.train.TrainerModule.is_new_model_better"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_new_model_better</span></code></a>(new_metrics, old_metrics)</p></td>
 <td><p>Compare two sets of evaluation metrics to decide whether the new model is better than the previous ones or not.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.load_from_checkpoints" title="jaxili.train.TrainerModule.load_from_checkpoints"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_from_checkpoints</span></code></a>(model_class, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.load_from_checkpoints" title="jaxili.train.TrainerModule.load_from_checkpoints"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_from_checkpoints</span></code></a>(model_class, ...)</p></td>
 <td><p>Create a Trainer object with same hyperparameters and loaded model from a checkpoint directory.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.load_model" title="jaxili.train.TrainerModule.load_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_model</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.load_model" title="jaxili.train.TrainerModule.load_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_model</span></code></a>()</p></td>
 <td><p>Load model and batch statistics from the logging directory.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.on_training_epoch_end" title="jaxili.train.TrainerModule.on_training_epoch_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_training_epoch_end</span></code></a>(epoch_idx)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.on_training_epoch_end" title="jaxili.train.TrainerModule.on_training_epoch_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_training_epoch_end</span></code></a>(epoch_idx)</p></td>
 <td><p>Perform any necessary operations at the end of each training epoch.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.on_training_start" title="jaxili.train.TrainerModule.on_training_start"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_training_start</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.on_training_start" title="jaxili.train.TrainerModule.on_training_start"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_training_start</span></code></a>()</p></td>
 <td><p>Perform any necessary operations before the training starts.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.on_validation_epoch_end" title="jaxili.train.TrainerModule.on_validation_epoch_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_validation_epoch_end</span></code></a>(epoch_idx, ...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.on_validation_epoch_end" title="jaxili.train.TrainerModule.on_validation_epoch_end"><code class="xref py py-obj docutils literal notranslate"><span class="pre">on_validation_epoch_end</span></code></a>(epoch_idx, ...)</p></td>
 <td><p>Perform any necessary operations at the end of each validation epoch.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.print_tabulate" title="jaxili.train.TrainerModule.print_tabulate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">print_tabulate</span></code></a>(exmp_input)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.print_tabulate" title="jaxili.train.TrainerModule.print_tabulate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">print_tabulate</span></code></a>(exmp_input)</p></td>
 <td><p>Print a summary of the model represented as a table.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.run_model_init" title="jaxili.train.TrainerModule.run_model_init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_model_init</span></code></a>(exmp_input, init_rng)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.run_model_init" title="jaxili.train.TrainerModule.run_model_init"><code class="xref py py-obj docutils literal notranslate"><span class="pre">run_model_init</span></code></a>(exmp_input, init_rng)</p></td>
 <td><p>Initialize the model by calling it on the example input.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.save_metrics" title="jaxili.train.TrainerModule.save_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_metrics</span></code></a>(filename, metrics)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.save_metrics" title="jaxili.train.TrainerModule.save_metrics"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_metrics</span></code></a>(filename, metrics)</p></td>
 <td><p>Save a dictionary of metrics to file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.save_model" title="jaxili.train.TrainerModule.save_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_model</span></code></a>([step])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.save_model" title="jaxili.train.TrainerModule.save_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_model</span></code></a>([step])</p></td>
 <td><p>Save current training state at certain training iteration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.tracker" title="jaxili.train.TrainerModule.tracker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tracker</span></code></a>(iterator, **kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.tracker" title="jaxili.train.TrainerModule.tracker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tracker</span></code></a>(iterator, **kwargs)</p></td>
 <td><p>Wrap an iterator in a progress bar track (tqdm) if the progress bar is enabled.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.train_epoch" title="jaxili.train.TrainerModule.train_epoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">train_epoch</span></code></a>(train_loader)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.train_epoch" title="jaxili.train.TrainerModule.train_epoch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">train_epoch</span></code></a>(train_loader)</p></td>
 <td><p>Train the model for one epoch.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.train_model" title="jaxili.train.TrainerModule.train_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">train_model</span></code></a>(train_loader, val_loader[, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.train_model" title="jaxili.train.TrainerModule.train_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">train_model</span></code></a>(train_loader, val_loader[, ...])</p></td>
 <td><p>Start a training loop for the given number of epochs.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.train.TrainerModule.write_config" title="jaxili.train.TrainerModule.write_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_config</span></code></a>(log_dir)</p></td>
+<td><p>Write the config of the trainer in a JSON file.</p></td>
 </tr>
 </tbody>
 </table>
@@ -562,6 +571,12 @@ Both functions are expected to return a dictionary of logging metrics, and the t
 <dt class="sig sig-object py" id="jaxili.train.TrainerModule.init_apply_fn">
 <span class="sig-name descname"><span class="pre">init_apply_fn</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/jaxili/train.html#TrainerModule.init_apply_fn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxili.train.TrainerModule.init_apply_fn" title="Link to this definition">#</a></dt>
 <dd><p>Initialize a default apply function for the model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxili.train.TrainerModule.init_checkpointer">
+<span class="sig-name descname"><span class="pre">init_checkpointer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/jaxili/train.html#TrainerModule.init_checkpointer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxili.train.TrainerModule.init_checkpointer" title="Link to this definition">#</a></dt>
+<dd><p>Initialize the checkpointer to save the model.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -795,6 +810,12 @@ Both functions are expected to return a dictionary of logging metrics, and the t
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="jaxili.train.TrainerModule.write_config">
+<span class="sig-name descname"><span class="pre">write_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jaxili/train.html#TrainerModule.write_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxili.train.TrainerModule.write_config" title="Link to this definition">#</a></dt>
+<dd><p>Write the config of the trainer in a JSON file.</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -857,6 +878,7 @@ Both functions are expected to return a dictionary of logging metrics, and the t
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.eval_model"><code class="docutils literal notranslate"><span class="pre">TrainerModule.eval_model()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.generate_config"><code class="docutils literal notranslate"><span class="pre">TrainerModule.generate_config()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.init_apply_fn"><code class="docutils literal notranslate"><span class="pre">TrainerModule.init_apply_fn()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.init_checkpointer"><code class="docutils literal notranslate"><span class="pre">TrainerModule.init_checkpointer()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.init_logger"><code class="docutils literal notranslate"><span class="pre">TrainerModule.init_logger()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.init_model"><code class="docutils literal notranslate"><span class="pre">TrainerModule.init_model()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.init_optimizer"><code class="docutils literal notranslate"><span class="pre">TrainerModule.init_optimizer()</span></code></a></li>
@@ -873,6 +895,7 @@ Both functions are expected to return a dictionary of logging metrics, and the t
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.tracker"><code class="docutils literal notranslate"><span class="pre">TrainerModule.tracker()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.train_epoch"><code class="docutils literal notranslate"><span class="pre">TrainerModule.train_epoch()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.train_model"><code class="docutils literal notranslate"><span class="pre">TrainerModule.train_model()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.train.TrainerModule.write_config"><code class="docutils literal notranslate"><span class="pre">TrainerModule.write_config()</span></code></a></li>
 </ul>
 </li>
 </ul>

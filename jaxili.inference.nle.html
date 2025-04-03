@@ -162,6 +162,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples/index.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="examples/getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">JaxILI</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/nle_quickstart.html">Neural Likelihood Estimation Quickstart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/training_conditional_maf.html">Training a Conditional MAF</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="user_guide/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -339,6 +340,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.inference.nle.NLE.append_simulations"><code class="docutils literal notranslate"><span class="pre">NLE.append_simulations()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.inference.nle.NLE.build_posterior"><code class="docutils literal notranslate"><span class="pre">NLE.build_posterior()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.inference.nle.NLE.create_trainer"><code class="docutils literal notranslate"><span class="pre">NLE.create_trainer()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.inference.nle.NLE.load_from_checkpoints"><code class="docutils literal notranslate"><span class="pre">NLE.load_from_checkpoints()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.inference.nle.NLE.set_dataloader"><code class="docutils literal notranslate"><span class="pre">NLE.set_dataloader()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.inference.nle.NLE.set_dataset"><code class="docutils literal notranslate"><span class="pre">NLE.set_dataset()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.inference.nle.NLE.set_loss_fn"><code class="docutils literal notranslate"><span class="pre">NLE.set_loss_fn()</span></code></a></li>
@@ -388,19 +390,22 @@ Default configuration used a <cite>ConditionalMAF</cite> to learn the likelihood
 <tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.inference.nle.NLE.create_trainer" title="jaxili.inference.nle.NLE.create_trainer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_trainer</span></code></a>(optimizer_hparams[, seed, ...])</p></td>
 <td><p>Create a TrainerModule for the density estimator.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.inference.nle.NLE.set_dataloader" title="jaxili.inference.nle.NLE.set_dataloader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_dataloader</span></code></a>(dataloader, type)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.inference.nle.NLE.load_from_checkpoints" title="jaxili.inference.nle.NLE.load_from_checkpoints"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_from_checkpoints</span></code></a>(checkpoint, exmp_input)</p></td>
+<td><p>Create a NLE object where the TrainerModule is loading the already existing weights for the neural network.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.inference.nle.NLE.set_dataloader" title="jaxili.inference.nle.NLE.set_dataloader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_dataloader</span></code></a>(dataloader, type)</p></td>
 <td><p>Set the dataloader to use for training, validation or testing.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.inference.nle.NLE.set_dataset" title="jaxili.inference.nle.NLE.set_dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_dataset</span></code></a>(dataset, type)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.inference.nle.NLE.set_dataset" title="jaxili.inference.nle.NLE.set_dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_dataset</span></code></a>(dataset, type)</p></td>
 <td><p>Set the dataset to use for training, validation or testing.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.inference.nle.NLE.set_loss_fn" title="jaxili.inference.nle.NLE.set_loss_fn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_loss_fn</span></code></a>(loss_fn)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.inference.nle.NLE.set_loss_fn" title="jaxili.inference.nle.NLE.set_loss_fn"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_loss_fn</span></code></a>(loss_fn)</p></td>
 <td><p>Set the loss function to use for training.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.inference.nle.NLE.set_model_hparams" title="jaxili.inference.nle.NLE.set_model_hparams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_model_hparams</span></code></a>(hparams)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.inference.nle.NLE.set_model_hparams" title="jaxili.inference.nle.NLE.set_model_hparams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_model_hparams</span></code></a>(hparams)</p></td>
 <td><p>Set the hyperparameters of the model.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#jaxili.inference.nle.NLE.train" title="jaxili.inference.nle.NLE.train"><code class="xref py py-obj docutils literal notranslate"><span class="pre">train</span></code></a>([training_batch_size, learning_rate, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#jaxili.inference.nle.NLE.train" title="jaxili.inference.nle.NLE.train"><code class="xref py py-obj docutils literal notranslate"><span class="pre">train</span></code></a>([training_batch_size, learning_rate, ...])</p></td>
 <td><p>Train the density estimator to approximate the distribution $p(theta|x)$.</p></td>
 </tr>
 </tbody>
@@ -468,6 +473,25 @@ The sampling is performed using MCMC methods.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="jaxili.inference.nle.NLE.load_from_checkpoints">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_from_checkpoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">checkpoint:</span> <span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exmp_input:</span> <span class="pre">~typing.Any</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding_net_class=&lt;class</span> <span class="pre">'jaxili.compressor.Identity'&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="_modules/jaxili/inference/nle.html#NLE.load_from_checkpoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxili.inference.nle.NLE.load_from_checkpoints" title="Link to this definition">#</a></dt>
+<dd><p>Create a NLE object where the TrainerModule is loading the already existing weights for the neural network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nde_class</strong> (<a class="reference internal" href="jaxili.model.html#jaxili.model.NDENetwork" title="jaxili.model.NDENetwork"><em>NDENetwork</em></a>) – Class used to create the neural density estimator</p></li>
+<li><p><strong>checkpoint</strong> (<em>str</em>) – Folder in which the checkpoint and hyperparameter file is stored</p></li>
+<li><p><strong>exmp_input</strong> (<em>Any</em>) – An input to the model with which the shapes are inferred.</p></li>
+<li><p><strong>embedding_net_class</strong> (<em>nn.Module</em>) – Class used to create the embedding net. (Default: Identity)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>A NLE object containing a model with the pre-trained weights loaded.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="jaxili.inference.nle.NLE.set_dataloader">
 <span class="sig-name descname"><span class="pre">set_dataloader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataloader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jaxili/inference/nle.html#NLE.set_dataloader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxili.inference.nle.NLE.set_dataloader" title="Link to this definition">#</a></dt>
 <dd><p>Set the dataloader to use for training, validation or testing.</p>
@@ -529,6 +553,20 @@ The sampling is performed using MCMC methods.</p>
 <li><p><strong>patience</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of epochs to wait before early stopping. Default is 20.</p></li>
 <li><p><strong>num_epochs</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum number of epochs to train. Default is 2**31 - 1.</p></li>
 <li><p><strong>check_val_every_epoch</strong> (<em>int</em><em>, </em><em>optional</em>) – Frequency at which to check the validation loss. Default is 1.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em><em>, </em><em>optional</em>) – <p>Additional keyword arguments for training customization:</p>
+<ul>
+<li><p>optimizer_name (str): Name of the optimizer to use (default: ‘adam’).</p></li>
+<li><p>gradient_clip (float): Value for gradient clipping (default: 5.0).</p></li>
+<li><p>warmup (float): Warmup proportion for learning rate scheduling (default: 0.1).</p></li>
+<li><p>weight_decay (float): Weight decay (L2 regularization) (default: 0.0).</p></li>
+<li><p>checkpoint_path (str): Directory to save training checkpoints (default: ‘checkpoints/’).</p></li>
+<li><p>log_dir (str or None): Directory for logging (default: None).</p></li>
+<li><p>logger_type (str): Type of logger to use (default: ‘TensorBoard’).</p></li>
+<li><p>seed (int): Random seed for reproducibility (default: 42).</p></li>
+<li><p>debug (bool): Whether to run in debug mode (default: False).</p></li>
+<li><p>min_delta (float): Minimum change in validation loss to qualify as improvement (default: 1e-3).</p></li>
+</ul>
+</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -594,6 +632,7 @@ The sampling is performed using MCMC methods.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.inference.nle.NLE.append_simulations"><code class="docutils literal notranslate"><span class="pre">NLE.append_simulations()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.inference.nle.NLE.build_posterior"><code class="docutils literal notranslate"><span class="pre">NLE.build_posterior()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.inference.nle.NLE.create_trainer"><code class="docutils literal notranslate"><span class="pre">NLE.create_trainer()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.inference.nle.NLE.load_from_checkpoints"><code class="docutils literal notranslate"><span class="pre">NLE.load_from_checkpoints()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.inference.nle.NLE.set_dataloader"><code class="docutils literal notranslate"><span class="pre">NLE.set_dataloader()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.inference.nle.NLE.set_dataset"><code class="docutils literal notranslate"><span class="pre">NLE.set_dataset()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.inference.nle.NLE.set_loss_fn"><code class="docutils literal notranslate"><span class="pre">NLE.set_loss_fn()</span></code></a></li>

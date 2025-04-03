@@ -161,6 +161,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../examples/index.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../examples/getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">JaxILI</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../examples/nle_quickstart.html">Neural Likelihood Estimation Quickstart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/training_conditional_maf.html">Training a Conditional MAF</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../user_guide/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -301,9 +302,10 @@ document.write(`
 <span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpyro</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpyro.distributions</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">dist</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">flowMC.nfmodel.rqSpline</span><span class="w"> </span><span class="kn">import</span> <span class="n">MaskedCouplingRQSpline</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">flowMC.proposal.MALA</span><span class="w"> </span><span class="kn">import</span> <span class="n">MALA</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">flowMC.Sampler</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sampler</span>
+
+<span class="c1"># from flowMC.resource.nf_model.rqSpline import MaskedCouplingRQSpline</span>
+<span class="c1"># from flowMC.resource.local_kernel.MALA import MALA</span>
+<span class="c1"># from flowMC.Sampler import Sampler</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">jaxtyping</span><span class="w"> </span><span class="kn">import</span> <span class="n">Array</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numpyro.infer</span><span class="w"> </span><span class="kn">import</span> <span class="n">HMC</span><span class="p">,</span> <span class="n">MCMC</span><span class="p">,</span> <span class="n">NUTS</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">numpyro.infer.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">init_to_value</span>
@@ -637,52 +639,55 @@ document.write(`
 <span class="sd">        Array</span>
 <span class="sd">            The samples from the posterior.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">num_samples</span> <span class="o">=</span> <span class="n">mcmc_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;num_samples&quot;</span><span class="p">,</span> <span class="mi">2000</span><span class="p">)</span>
-        <span class="n">num_chains</span> <span class="o">=</span> <span class="n">mcmc_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;num_chains&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">n_dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prior_distr</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">sample_shape</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,),</span> <span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span>
-            <span class="mi">0</span>
-        <span class="p">]</span>  <span class="c1"># Get the dimension of the parameters (we can probably do better)</span>
-        <span class="c1"># We can probably inherit this property from the trainer module.</span>
-
-        <span class="c1"># Setup the Normalizing Flow</span>
-        <span class="n">n_layers</span> <span class="o">=</span> <span class="n">mcmc_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;n_layers&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-        <span class="n">hidden_size</span> <span class="o">=</span> <span class="n">mcmc_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;hidden_size&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">64</span><span class="p">,</span> <span class="mi">64</span><span class="p">])</span>
-        <span class="n">num_bins</span> <span class="o">=</span> <span class="n">mcmc_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;num_bins&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>  <span class="c1"># Number of bins in the spline</span>
-
-        <span class="n">nf_key</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-        <span class="n">model</span> <span class="o">=</span> <span class="n">MaskedCouplingRQSpline</span><span class="p">(</span><span class="n">n_dim</span><span class="p">,</span> <span class="n">n_layers</span><span class="p">,</span> <span class="n">hidden_size</span><span class="p">,</span> <span class="n">num_bins</span><span class="p">,</span> <span class="n">nf_key</span><span class="p">)</span>
-
-        <span class="c1"># Setup the MALA kernel</span>
-        <span class="n">step_size</span> <span class="o">=</span> <span class="n">mcmc_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;step_size&quot;</span><span class="p">,</span> <span class="mf">1e-1</span><span class="p">)</span>
-        <span class="n">local_sampler</span> <span class="o">=</span> <span class="n">MALA</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unnormalized_log_prob</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">step_size</span><span class="o">=</span><span class="n">step_size</span><span class="p">)</span>
-
-        <span class="c1"># Create the sampler</span>
-        <span class="n">n_local_steps</span> <span class="o">=</span> <span class="n">mcmc_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;n_local_steps&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-        <span class="n">n_global_steps</span> <span class="o">=</span> <span class="n">mcmc_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;n_global_steps&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-        <span class="n">n_epochs</span> <span class="o">=</span> <span class="n">mcmc_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;n_epochs&quot;</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
-        <span class="n">learning_rate</span> <span class="o">=</span> <span class="n">mcmc_kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;learning_rate&quot;</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">)</span>
-        <span class="n">nf_sampler</span> <span class="o">=</span> <span class="n">Sampler</span><span class="p">(</span>
-            <span class="n">n_dim</span><span class="p">,</span>
-            <span class="n">key</span><span class="p">,</span>
-            <span class="n">x</span><span class="p">,</span>
-            <span class="n">local_sampler</span><span class="p">,</span>
-            <span class="n">model</span><span class="p">,</span>
-            <span class="n">n_local_steps</span><span class="o">=</span><span class="n">n_local_steps</span><span class="p">,</span>
-            <span class="n">n_global_steps</span><span class="o">=</span><span class="n">n_global_steps</span><span class="p">,</span>
-            <span class="n">n_epochs</span><span class="o">=</span><span class="n">n_epochs</span><span class="p">,</span>
-            <span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span>
-            <span class="n">batch_size</span><span class="o">=</span><span class="n">num_samples</span><span class="p">,</span>
-            <span class="n">n_chains</span><span class="o">=</span><span class="n">num_chains</span><span class="p">,</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+            <span class="s2">&quot;Sampling with FlowMC is not yet implemented in JaxILI.&quot;</span>
         <span class="p">)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; num_samples = mcmc_kwargs.get(&quot;num_samples&quot;, 2000)</span>
+<span class="sd">        num_chains = mcmc_kwargs.get(&quot;num_chains&quot;, 1)</span>
+<span class="sd">        n_dim = self.prior_distr.sample(sample_shape=(1,), key=key).shape[</span>
+<span class="sd">            0</span>
+<span class="sd">        ]  # Get the dimension of the parameters (we can probably do better)</span>
+<span class="sd">        # We can probably inherit this property from the trainer module.</span>
 
-        <span class="c1"># Sample!</span>
-        <span class="n">initial_state</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">initial_state</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">nf_sampler</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">initial_state</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
-        <span class="n">chains</span><span class="p">,</span> <span class="n">log_prob</span><span class="p">,</span> <span class="n">local_accs</span><span class="p">,</span> <span class="n">global_accs</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">nf_sampler</span><span class="o">.</span><span class="n">get_sampler_state</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
-        <span class="p">)</span>
-        <span class="n">chains</span> <span class="o">=</span> <span class="n">chains</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">chains</span>
+<span class="sd">        # Setup the Normalizing Flow</span>
+<span class="sd">        n_layers = mcmc_kwargs.get(&quot;n_layers&quot;, 3)</span>
+<span class="sd">        hidden_size = mcmc_kwargs.get(&quot;hidden_size&quot;, [64, 64])</span>
+<span class="sd">        num_bins = mcmc_kwargs.get(&quot;num_bins&quot;, 8)  # Number of bins in the spline</span>
+
+<span class="sd">        nf_key, key = jax.random.split(key)</span>
+<span class="sd">        model = MaskedCouplingRQSpline(n_dim, n_layers, hidden_size, num_bins, nf_key)</span>
+
+<span class="sd">        # Setup the MALA kernel</span>
+<span class="sd">        step_size = mcmc_kwargs.get(&quot;step_size&quot;, 1e-1)</span>
+<span class="sd">        local_sampler = MALA(self.unnormalized_log_prob, True, step_size=step_size)</span>
+
+<span class="sd">        # Create the sampler</span>
+<span class="sd">        n_local_steps = mcmc_kwargs.get(&quot;n_local_steps&quot;, 50)</span>
+<span class="sd">        n_global_steps = mcmc_kwargs.get(&quot;n_global_steps&quot;, 50)</span>
+<span class="sd">        n_epochs = mcmc_kwargs.get(&quot;n_epochs&quot;, 30)</span>
+<span class="sd">        learning_rate = mcmc_kwargs.get(&quot;learning_rate&quot;, 1e-2)</span>
+<span class="sd">        nf_sampler = Sampler(</span>
+<span class="sd">            n_dim,</span>
+<span class="sd">            key,</span>
+<span class="sd">            x,</span>
+<span class="sd">            local_sampler,</span>
+<span class="sd">            model,</span>
+<span class="sd">            n_local_steps=n_local_steps,</span>
+<span class="sd">            n_global_steps=n_global_steps,</span>
+<span class="sd">            n_epochs=n_epochs,</span>
+<span class="sd">            learning_rate=learning_rate,</span>
+<span class="sd">            batch_size=num_samples,</span>
+<span class="sd">            n_chains=num_chains,</span>
+<span class="sd">        )</span>
+
+<span class="sd">        # Sample!</span>
+<span class="sd">        initial_state = jnp.expand_dims(initial_state, axis=1)</span>
+<span class="sd">        nf_sampler.sample(initial_state, x)</span>
+<span class="sd">        chains, log_prob, local_accs, global_accs = (</span>
+<span class="sd">            nf_sampler.get_sampler_state().values()</span>
+<span class="sd">        )</span>
+<span class="sd">        chains = chains.squeeze()</span>
+<span class="sd">        return chains &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_get_initial_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="n">num_chains</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">Array</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>

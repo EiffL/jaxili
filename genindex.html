@@ -161,6 +161,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples/index.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="examples/getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">JaxILI</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/nle_quickstart.html">Neural Likelihood Estimation Quickstart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/training_conditional_maf.html">Training a Conditional MAF</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="user_guide/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -312,6 +313,7 @@ document.write(`
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
  | <a href="#Y"><strong>Y</strong></a>
  
 </div>
@@ -484,9 +486,11 @@ document.write(`
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="jaxili.model.html#jaxili.model.Identity">Identity (class in jaxili.model)</a>
+      <li><a href="jaxili.compressor.html#jaxili.compressor.Identity">Identity (class in jaxili.compressor)</a>
 </li>
       <li><a href="jaxili.train.html#jaxili.train.TrainerModule.init_apply_fn">init_apply_fn() (jaxili.train.TrainerModule method)</a>
+</li>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.init_checkpointer">init_checkpointer() (jaxili.train.TrainerModule method)</a>
 </li>
       <li><a href="jaxili.train.html#jaxili.train.TrainerModule.init_logger">init_logger() (jaxili.train.TrainerModule method)</a>
 </li>
@@ -622,8 +626,14 @@ document.write(`
         <li><a href="jaxili.model.html#jaxili.model.MixtureDensityNetwork.layers">(jaxili.model.MixtureDensityNetwork attribute)</a>
 </li>
       </ul></li>
-      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.load_from_checkpoints">load_from_checkpoints() (jaxili.train.TrainerModule class method)</a>
+      <li><a href="jaxili.inference.nle.html#jaxili.inference.nle.NLE.load_from_checkpoints">load_from_checkpoints() (jaxili.inference.nle.NLE class method)</a>
+
+      <ul>
+        <li><a href="jaxili.inference.npe.html#jaxili.inference.npe.NPE.load_from_checkpoints">(jaxili.inference.npe.NPE class method)</a>
 </li>
+        <li><a href="jaxili.train.html#jaxili.train.TrainerModule.load_from_checkpoints">(jaxili.train.TrainerModule class method)</a>
+</li>
+      </ul></li>
       <li><a href="jaxili.train.html#jaxili.train.TrainerModule.load_model">load_model() (jaxili.train.TrainerModule method)</a>
 </li>
       <li><a href="jaxili.posterior.mcmc_posterior.html#jaxili.posterior.mcmc_posterior.MCMCPosterior.log_likelihood">log_likelihood() (jaxili.posterior.mcmc_posterior.MCMCPosterior method)</a>
@@ -674,7 +684,7 @@ document.write(`
 </li>
       <li><a href="jaxili.posterior.mcmc_posterior.html#jaxili.posterior.mcmc_posterior.MCMCPosterior">MCMCPosterior (class in jaxili.posterior.mcmc_posterior)</a>
 </li>
-      <li><a href="jaxili.model.html#jaxili.model.Standardizer.mean">mean (jaxili.model.Standardizer attribute)</a>
+      <li><a href="jaxili.compressor.html#jaxili.compressor.Standardizer.mean">mean (jaxili.compressor.Standardizer attribute)</a>
 </li>
       <li><a href="jaxili.model.html#jaxili.model.MixtureDensityNetwork">MixtureDensityNetwork (class in jaxili.model)</a>
 </li>
@@ -760,7 +770,11 @@ document.write(`
       <li><a href="jaxili.compressor.html#jaxili.compressor.CNN2DCompressor.name">name (jaxili.compressor.CNN2DCompressor attribute)</a>
 
       <ul>
+        <li><a href="jaxili.compressor.html#jaxili.compressor.Identity.name">(jaxili.compressor.Identity attribute)</a>
+</li>
         <li><a href="jaxili.compressor.html#jaxili.compressor.MLPCompressor.name">(jaxili.compressor.MLPCompressor attribute)</a>
+</li>
+        <li><a href="jaxili.compressor.html#jaxili.compressor.Standardizer.name">(jaxili.compressor.Standardizer attribute)</a>
 </li>
         <li><a href="jaxili.model.html#jaxili.model.AffineCoupling.name">(jaxili.model.AffineCoupling attribute)</a>
 </li>
@@ -771,8 +785,6 @@ document.write(`
         <li><a href="jaxili.model.html#jaxili.model.ConditionalMAF.name">(jaxili.model.ConditionalMAF attribute)</a>
 </li>
         <li><a href="jaxili.model.html#jaxili.model.ConditionalRealNVP.name">(jaxili.model.ConditionalRealNVP attribute)</a>
-</li>
-        <li><a href="jaxili.model.html#jaxili.model.Identity.name">(jaxili.model.Identity attribute)</a>
 </li>
         <li><a href="jaxili.model.html#jaxili.model.MAFLayer.name">(jaxili.model.MAFLayer attribute)</a>
 </li>
@@ -785,8 +797,6 @@ document.write(`
         <li><a href="jaxili.model.html#jaxili.model.NDE_w_Standardization.name">(jaxili.model.NDE_w_Standardization attribute)</a>
 </li>
         <li><a href="jaxili.model.html#jaxili.model.NDENetwork.name">(jaxili.model.NDENetwork attribute)</a>
-</li>
-        <li><a href="jaxili.model.html#jaxili.model.Standardizer.name">(jaxili.model.Standardizer attribute)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -840,7 +850,11 @@ document.write(`
       <li><a href="jaxili.compressor.html#jaxili.compressor.CNN2DCompressor.parent">parent (jaxili.compressor.CNN2DCompressor attribute)</a>
 
       <ul>
+        <li><a href="jaxili.compressor.html#jaxili.compressor.Identity.parent">(jaxili.compressor.Identity attribute)</a>
+</li>
         <li><a href="jaxili.compressor.html#jaxili.compressor.MLPCompressor.parent">(jaxili.compressor.MLPCompressor attribute)</a>
+</li>
+        <li><a href="jaxili.compressor.html#jaxili.compressor.Standardizer.parent">(jaxili.compressor.Standardizer attribute)</a>
 </li>
         <li><a href="jaxili.model.html#jaxili.model.AffineCoupling.parent">(jaxili.model.AffineCoupling attribute)</a>
 </li>
@@ -851,8 +865,6 @@ document.write(`
         <li><a href="jaxili.model.html#jaxili.model.ConditionalMAF.parent">(jaxili.model.ConditionalMAF attribute)</a>
 </li>
         <li><a href="jaxili.model.html#jaxili.model.ConditionalRealNVP.parent">(jaxili.model.ConditionalRealNVP attribute)</a>
-</li>
-        <li><a href="jaxili.model.html#jaxili.model.Identity.parent">(jaxili.model.Identity attribute)</a>
 </li>
         <li><a href="jaxili.model.html#jaxili.model.MAFLayer.parent">(jaxili.model.MAFLayer attribute)</a>
 </li>
@@ -865,8 +877,6 @@ document.write(`
         <li><a href="jaxili.model.html#jaxili.model.NDE_w_Standardization.parent">(jaxili.model.NDE_w_Standardization attribute)</a>
 </li>
         <li><a href="jaxili.model.html#jaxili.model.NDENetwork.parent">(jaxili.model.NDENetwork attribute)</a>
-</li>
-        <li><a href="jaxili.model.html#jaxili.model.Standardizer.parent">(jaxili.model.Standardizer attribute)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -928,7 +938,11 @@ document.write(`
       <li><a href="jaxili.compressor.html#jaxili.compressor.CNN2DCompressor.scope">scope (jaxili.compressor.CNN2DCompressor attribute)</a>
 
       <ul>
+        <li><a href="jaxili.compressor.html#jaxili.compressor.Identity.scope">(jaxili.compressor.Identity attribute)</a>
+</li>
         <li><a href="jaxili.compressor.html#jaxili.compressor.MLPCompressor.scope">(jaxili.compressor.MLPCompressor attribute)</a>
+</li>
+        <li><a href="jaxili.compressor.html#jaxili.compressor.Standardizer.scope">(jaxili.compressor.Standardizer attribute)</a>
 </li>
         <li><a href="jaxili.model.html#jaxili.model.AffineCoupling.scope">(jaxili.model.AffineCoupling attribute)</a>
 </li>
@@ -939,8 +953,6 @@ document.write(`
         <li><a href="jaxili.model.html#jaxili.model.ConditionalMAF.scope">(jaxili.model.ConditionalMAF attribute)</a>
 </li>
         <li><a href="jaxili.model.html#jaxili.model.ConditionalRealNVP.scope">(jaxili.model.ConditionalRealNVP attribute)</a>
-</li>
-        <li><a href="jaxili.model.html#jaxili.model.Identity.scope">(jaxili.model.Identity attribute)</a>
 </li>
         <li><a href="jaxili.model.html#jaxili.model.MAFLayer.scope">(jaxili.model.MAFLayer attribute)</a>
 </li>
@@ -953,8 +965,6 @@ document.write(`
         <li><a href="jaxili.model.html#jaxili.model.NDE_w_Standardization.scope">(jaxili.model.NDE_w_Standardization attribute)</a>
 </li>
         <li><a href="jaxili.model.html#jaxili.model.NDENetwork.scope">(jaxili.model.NDENetwork attribute)</a>
-</li>
-        <li><a href="jaxili.model.html#jaxili.model.Standardizer.scope">(jaxili.model.Standardizer attribute)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -1013,9 +1023,9 @@ document.write(`
       </ul></li>
       <li><a href="jaxili.model.html#jaxili.model.NDE_w_Standardization.standardize">standardize() (jaxili.model.NDE_w_Standardization method)</a>
 </li>
-      <li><a href="jaxili.model.html#jaxili.model.Standardizer">Standardizer (class in jaxili.model)</a>
+      <li><a href="jaxili.compressor.html#jaxili.compressor.Standardizer">Standardizer (class in jaxili.compressor)</a>
 </li>
-      <li><a href="jaxili.model.html#jaxili.model.Standardizer.std">std (jaxili.model.Standardizer attribute)</a>
+      <li><a href="jaxili.compressor.html#jaxili.compressor.Standardizer.std">std (jaxili.compressor.Standardizer attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1070,6 +1080,14 @@ document.write(`
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="jaxili.utils.html#jaxili.utils.validate_theta_x">validate_theta_x() (in module jaxili.utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="jaxili.train.html#jaxili.train.TrainerModule.write_config">write_config() (jaxili.train.TrainerModule method)</a>
 </li>
   </ul></td>
 </tr></table>

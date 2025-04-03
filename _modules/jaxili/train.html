@@ -161,6 +161,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../examples/index.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../examples/getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">JaxILI</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../examples/nle_quickstart.html">Neural Likelihood Estimation Quickstart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../examples/training_conditional_maf.html">Training a Conditional MAF</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../user_guide/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -410,11 +411,7 @@ document.write(`
         <span class="bp">self</span><span class="o">.</span><span class="n">create_jitted_functions</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">init_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">exmp_input</span><span class="p">)</span>
         <span class="c1"># Initialize checkpointer</span>
-        <span class="n">options</span> <span class="o">=</span> <span class="n">ocp</span><span class="o">.</span><span class="n">CheckpointManagerOptions</span><span class="p">(</span><span class="n">max_to_keep</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">create</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">orbax_checkpointer</span> <span class="o">=</span> <span class="n">ocp</span><span class="o">.</span><span class="n">PyTreeCheckpointer</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint_manager</span> <span class="o">=</span> <span class="n">ocp</span><span class="o">.</span><span class="n">CheckpointManager</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">log_dir</span><span class="p">,</span> <span class="n">orbax_checkpointer</span><span class="p">,</span> <span class="n">options</span>
-        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_checkpointer</span><span class="p">()</span>
 
 <div class="viewcode-block" id="TrainerModule.init_logger">
 <a class="viewcode-back" href="../../jaxili.train.html#jaxili.train.TrainerModule.init_logger">[docs]</a>
@@ -453,11 +450,26 @@ document.write(`
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">log_dir</span><span class="p">,</span> <span class="s2">&quot;hparams.json&quot;</span><span class="p">)):</span>
             <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">log_dir</span><span class="p">,</span> <span class="s2">&quot;metrics/&quot;</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">log_dir</span><span class="p">,</span> <span class="s2">&quot;hparams.json&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-                    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">handle_non_serializable</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">write_config</span><span class="p">(</span><span class="n">log_dir</span><span class="p">)</span>
             <span class="k">except</span><span class="p">:</span>
                 <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Could not save hyperparameters.&quot;</span><span class="p">,</span> <span class="ne">Warning</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">log_dir</span> <span class="o">=</span> <span class="n">log_dir</span></div>
+
+
+<div class="viewcode-block" id="TrainerModule.write_config">
+<a class="viewcode-back" href="../../jaxili.train.html#jaxili.train.TrainerModule.write_config">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">write_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_dir</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Write the config of the trainer in a JSON file.&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">log_dir</span><span class="p">,</span> <span class="s2">&quot;hparams.json&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">handle_non_serializable</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TrainerModule.init_checkpointer">
+<a class="viewcode-back" href="../../jaxili.train.html#jaxili.train.TrainerModule.init_checkpointer">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">init_checkpointer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the checkpointer to save the model.&quot;&quot;&quot;</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="n">ocp</span><span class="o">.</span><span class="n">CheckpointManagerOptions</span><span class="p">(</span><span class="n">max_to_keep</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">create</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint_manager</span> <span class="o">=</span> <span class="n">ocp</span><span class="o">.</span><span class="n">CheckpointManager</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_dir</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="TrainerModule.init_model">
@@ -512,6 +524,7 @@ document.write(`
             <span class="s2">&quot;debug&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">,</span>
             <span class="s2">&quot;check_val_every_epoch&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_val_every_epoch</span><span class="p">,</span>
             <span class="s2">&quot;seed&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">seed</span><span class="p">,</span>
+            <span class="s2">&quot;nde_class&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">nde_class</span><span class="p">,</span>
         <span class="p">}</span>
 
         <span class="k">if</span> <span class="s2">&quot;activation&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_hparams</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
@@ -740,7 +753,7 @@ document.write(`
                     <span class="p">)</span>
         <span class="c1"># Test best model if possible</span>
         <span class="k">if</span> <span class="n">test_loader</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="c1"># self.load_model()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">load_model</span><span class="p">()</span>
             <span class="n">test_metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eval_model</span><span class="p">(</span><span class="n">test_loader</span><span class="p">,</span> <span class="n">log_prefix</span><span class="o">=</span><span class="s2">&quot;test/&quot;</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">(</span><span class="n">test_metrics</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">epoch_idx</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">save_metrics</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">test_metrics</span><span class="p">)</span>
@@ -959,8 +972,8 @@ document.write(`
 <span class="sd">            Index of the step to save the model at, e.g. epoch.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">target</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="s2">&quot;batch_stats&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">batch_stats</span><span class="p">}</span>
-        <span class="n">save_args</span> <span class="o">=</span> <span class="n">orbax_utils</span><span class="o">.</span><span class="n">save_args_from_target</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint_manager</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">save_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;save_args&quot;</span><span class="p">:</span> <span class="n">save_args</span><span class="p">})</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint_manager</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">step</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">ocp</span><span class="o">.</span><span class="n">args</span><span class="o">.</span><span class="n">StandardSave</span><span class="p">(</span><span class="n">target</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checkpoint_manager</span><span class="o">.</span><span class="n">wait_until_finished</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="TrainerModule.load_model">

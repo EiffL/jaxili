@@ -160,6 +160,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="examples/index.html">Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="examples/getting_started.html">Getting started with <code class="docutils literal notranslate"><span class="pre">JaxILI</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="examples/nle_quickstart.html">Neural Likelihood Estimation Quickstart</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/training_conditional_maf.html">Training a Conditional MAF</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="user_guide/index.html">User guide</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -341,6 +342,12 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.CNN2DCompressor.scope"><code class="docutils literal notranslate"><span class="pre">CNN2DCompressor.scope</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.Identity"><code class="docutils literal notranslate"><span class="pre">Identity</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.Identity.name"><code class="docutils literal notranslate"><span class="pre">Identity.name</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.Identity.parent"><code class="docutils literal notranslate"><span class="pre">Identity.parent</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.Identity.scope"><code class="docutils literal notranslate"><span class="pre">Identity.scope</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.MLPCompressor"><code class="docutils literal notranslate"><span class="pre">MLPCompressor</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.MLPCompressor.activation"><code class="docutils literal notranslate"><span class="pre">MLPCompressor.activation</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.MLPCompressor.hidden_size"><code class="docutils literal notranslate"><span class="pre">MLPCompressor.hidden_size</span></code></a></li>
@@ -348,6 +355,14 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.MLPCompressor.output_size"><code class="docutils literal notranslate"><span class="pre">MLPCompressor.output_size</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.MLPCompressor.parent"><code class="docutils literal notranslate"><span class="pre">MLPCompressor.parent</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.MLPCompressor.scope"><code class="docutils literal notranslate"><span class="pre">MLPCompressor.scope</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.Standardizer"><code class="docutils literal notranslate"><span class="pre">Standardizer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.Standardizer.mean"><code class="docutils literal notranslate"><span class="pre">Standardizer.mean</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.Standardizer.name"><code class="docutils literal notranslate"><span class="pre">Standardizer.name</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.Standardizer.parent"><code class="docutils literal notranslate"><span class="pre">Standardizer.parent</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.Standardizer.scope"><code class="docutils literal notranslate"><span class="pre">Standardizer.scope</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.Standardizer.std"><code class="docutils literal notranslate"><span class="pre">Standardizer.std</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -493,6 +508,116 @@ document.write(`
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="jaxili.compressor.Identity">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxili.compressor.</span></span><span class="sig-name descname"><span class="pre">Identity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parent:</span> <span class="pre">~flax.linen.module.Module</span> <span class="pre">|</span> <span class="pre">~flax.core.scope.Scope</span> <span class="pre">|</span> <span class="pre">~flax.linen.module._Sentinel</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">&lt;flax.linen.module._Sentinel</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jaxili/compressor.html#Identity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxili.compressor.Identity" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Identity transformation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>name</strong></dt><dd></dd>
+<dt><strong>parent</strong></dt><dd></dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">path</span></code></dt><dd><p>Get the path of this Module.</p>
+</dd>
+<dt><strong>scope</strong></dt><dd></dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">variables</span></code></dt><dd><p>Returns the variables in this module.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code>(x)</p></td>
+<td><p>Forward pass of the identity transformation.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply</span></code>(variables, *args[, rngs, method, ...])</p></td>
+<td><p>Applies a module method to variables and returns output and modified variables.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">bind</span></code>(variables, *args[, rngs, mutable])</p></td>
+<td><p>Creates an interactive Module instance by binding variables and RNGs.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clone</span></code>(*[, parent, _deep_clone, _reset_names])</p></td>
+<td><p>Creates a clone of this Module, with optionally updated arguments.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code>(*[, parent, name])</p></td>
+<td><p>Creates a copy of this Module, with optionally updated arguments.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_variable</span></code>(col, name[, default])</p></td>
+<td><p>Retrieves the value of a Variable.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_rng</span></code>(name)</p></td>
+<td><p>Returns true if a PRNGSequence with name <code class="docutils literal notranslate"><span class="pre">name</span></code> exists.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_variable</span></code>(col, name)</p></td>
+<td><p>Checks if a variable of given collection and name exists in this Module.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">init</span></code>(rngs, *args[, method, mutable, ...])</p></td>
+<td><p>Initializes a module method with variables and returns modified variables.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_with_output</span></code>(rngs, *args[, method, ...])</p></td>
+<td><p>Initializes a module method with variables and returns output and modified variables.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_initializing</span></code>()</p></td>
+<td><p>Returns True if running under self.init(...) or nn.init(...)().</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_mutable_collection</span></code>(col)</p></td>
+<td><p>Returns true if the collection <code class="docutils literal notranslate"><span class="pre">col</span></code> is mutable.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">lazy_init</span></code>(rngs, *args[, method, mutable])</p></td>
+<td><p>Initializes a module without computing on an actual input.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_rng</span></code>([name])</p></td>
+<td><p>Returns a new RNG key from a given RNG sequence for this Module.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">module_paths</span></code>(rngs, *args[, show_repeated, ...])</p></td>
+<td><p>Returns a dictionary mapping module paths to module instances.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">param</span></code>(name, init_fn, *init_args[, unbox])</p></td>
+<td><p>Declares and returns a parameter in this Module.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">perturb</span></code>(name, value[, collection])</p></td>
+<td><p>Add an zero-value variable ('perturbation') to the intermediate value.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">put_variable</span></code>(col, name, value)</p></td>
+<td><p>Updates the value of the given variable if it is mutable, or an error otherwise.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup</span></code>()</p></td>
+<td><p>Initializes a Module lazily (similar to a lazy <code class="docutils literal notranslate"><span class="pre">__init__</span></code>).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sow</span></code>(col, name, value[, reduce_fn, init_fn])</p></td>
+<td><p>Stores a value in a collection.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">tabulate</span></code>(rngs, *args[, depth, ...])</p></td>
+<td><p>Creates a summary of the Module represented as a table.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">unbind</span></code>()</p></td>
+<td><p>Returns an unbound copy of a Module and its variables.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">variable</span></code>(col, name[, init_fn, unbox])</p></td>
+<td><p>Declares and returns a variable in this Module.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxili.compressor.Identity.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#jaxili.compressor.Identity.name" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxili.compressor.Identity.parent">
+<span class="sig-name descname"><span class="pre">parent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Module</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scope</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_Sentinel</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#jaxili.compressor.Identity.parent" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxili.compressor.Identity.scope">
+<span class="sig-name descname"><span class="pre">scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Scope</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#jaxili.compressor.Identity.scope" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="jaxili.compressor.MLPCompressor">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxili.compressor.</span></span><span class="sig-name descname"><span class="pre">MLPCompressor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hidden_size:</span> <span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation:</span> <span class="pre">~typing.Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_size:</span> <span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent:</span> <span class="pre">~flax.linen.module.Module</span> <span class="pre">|</span> <span class="pre">~flax.core.scope.Scope</span> <span class="pre">|</span> <span class="pre">~flax.linen.module._Sentinel</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">&lt;flax.linen.module._Sentinel</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jaxili/compressor.html#MLPCompressor"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxili.compressor.MLPCompressor" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
@@ -625,6 +750,126 @@ document.write(`
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="jaxili.compressor.Standardizer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jaxili.compressor.</span></span><span class="sig-name descname"><span class="pre">Standardizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mean:</span> <span class="pre">~jax.Array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">std:</span> <span class="pre">~jax.Array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parent:</span> <span class="pre">~flax.linen.module.Module</span> <span class="pre">|</span> <span class="pre">~flax.core.scope.Scope</span> <span class="pre">|</span> <span class="pre">~flax.linen.module._Sentinel</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">&lt;flax.linen.module._Sentinel</span> <span class="pre">object&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/jaxili/compressor.html#Standardizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#jaxili.compressor.Standardizer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Standardizer transformation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>name</strong></dt><dd></dd>
+<dt><strong>parent</strong></dt><dd></dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">path</span></code></dt><dd><p>Get the path of this Module.</p>
+</dd>
+<dt><strong>scope</strong></dt><dd></dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">variables</span></code></dt><dd><p>Returns the variables in this module.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">__call__</span></code>(x)</p></td>
+<td><p>Forward pass of the standardizer transformation.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply</span></code>(variables, *args[, rngs, method, ...])</p></td>
+<td><p>Applies a module method to variables and returns output and modified variables.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">bind</span></code>(variables, *args[, rngs, mutable])</p></td>
+<td><p>Creates an interactive Module instance by binding variables and RNGs.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">clone</span></code>(*[, parent, _deep_clone, _reset_names])</p></td>
+<td><p>Creates a clone of this Module, with optionally updated arguments.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">copy</span></code>(*[, parent, name])</p></td>
+<td><p>Creates a copy of this Module, with optionally updated arguments.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_variable</span></code>(col, name[, default])</p></td>
+<td><p>Retrieves the value of a Variable.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_rng</span></code>(name)</p></td>
+<td><p>Returns true if a PRNGSequence with name <code class="docutils literal notranslate"><span class="pre">name</span></code> exists.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_variable</span></code>(col, name)</p></td>
+<td><p>Checks if a variable of given collection and name exists in this Module.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">init</span></code>(rngs, *args[, method, mutable, ...])</p></td>
+<td><p>Initializes a module method with variables and returns modified variables.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_with_output</span></code>(rngs, *args[, method, ...])</p></td>
+<td><p>Initializes a module method with variables and returns output and modified variables.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_initializing</span></code>()</p></td>
+<td><p>Returns True if running under self.init(...) or nn.init(...)().</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_mutable_collection</span></code>(col)</p></td>
+<td><p>Returns true if the collection <code class="docutils literal notranslate"><span class="pre">col</span></code> is mutable.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">lazy_init</span></code>(rngs, *args[, method, mutable])</p></td>
+<td><p>Initializes a module without computing on an actual input.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_rng</span></code>([name])</p></td>
+<td><p>Returns a new RNG key from a given RNG sequence for this Module.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">module_paths</span></code>(rngs, *args[, show_repeated, ...])</p></td>
+<td><p>Returns a dictionary mapping module paths to module instances.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">param</span></code>(name, init_fn, *init_args[, unbox])</p></td>
+<td><p>Declares and returns a parameter in this Module.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">perturb</span></code>(name, value[, collection])</p></td>
+<td><p>Add an zero-value variable ('perturbation') to the intermediate value.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">put_variable</span></code>(col, name, value)</p></td>
+<td><p>Updates the value of the given variable if it is mutable, or an error otherwise.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup</span></code>()</p></td>
+<td><p>Initializes a Module lazily (similar to a lazy <code class="docutils literal notranslate"><span class="pre">__init__</span></code>).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sow</span></code>(col, name, value[, reduce_fn, init_fn])</p></td>
+<td><p>Stores a value in a collection.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">tabulate</span></code>(rngs, *args[, depth, ...])</p></td>
+<td><p>Creates a summary of the Module represented as a table.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">unbind</span></code>()</p></td>
+<td><p>Returns an unbound copy of a Module and its variables.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">variable</span></code>(col, name[, init_fn, unbox])</p></td>
+<td><p>Declares and returns a variable in this Module.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxili.compressor.Standardizer.mean">
+<span class="sig-name descname"><span class="pre">mean</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></em><a class="headerlink" href="#jaxili.compressor.Standardizer.mean" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxili.compressor.Standardizer.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#jaxili.compressor.Standardizer.name" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxili.compressor.Standardizer.parent">
+<span class="sig-name descname"><span class="pre">parent</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Module</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Scope</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">_Sentinel</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#jaxili.compressor.Standardizer.parent" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxili.compressor.Standardizer.scope">
+<span class="sig-name descname"><span class="pre">scope</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Scope</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#jaxili.compressor.Standardizer.scope" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jaxili.compressor.Standardizer.std">
+<span class="sig-name descname"><span class="pre">std</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Array</span></em><a class="headerlink" href="#jaxili.compressor.Standardizer.std" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </section>
 
 
@@ -662,6 +907,12 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.CNN2DCompressor.scope"><code class="docutils literal notranslate"><span class="pre">CNN2DCompressor.scope</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.Identity"><code class="docutils literal notranslate"><span class="pre">Identity</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.Identity.name"><code class="docutils literal notranslate"><span class="pre">Identity.name</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.Identity.parent"><code class="docutils literal notranslate"><span class="pre">Identity.parent</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.Identity.scope"><code class="docutils literal notranslate"><span class="pre">Identity.scope</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.MLPCompressor"><code class="docutils literal notranslate"><span class="pre">MLPCompressor</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.MLPCompressor.activation"><code class="docutils literal notranslate"><span class="pre">MLPCompressor.activation</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.MLPCompressor.hidden_size"><code class="docutils literal notranslate"><span class="pre">MLPCompressor.hidden_size</span></code></a></li>
@@ -669,6 +920,14 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.MLPCompressor.output_size"><code class="docutils literal notranslate"><span class="pre">MLPCompressor.output_size</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.MLPCompressor.parent"><code class="docutils literal notranslate"><span class="pre">MLPCompressor.parent</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.MLPCompressor.scope"><code class="docutils literal notranslate"><span class="pre">MLPCompressor.scope</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.Standardizer"><code class="docutils literal notranslate"><span class="pre">Standardizer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.Standardizer.mean"><code class="docutils literal notranslate"><span class="pre">Standardizer.mean</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.Standardizer.name"><code class="docutils literal notranslate"><span class="pre">Standardizer.name</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.Standardizer.parent"><code class="docutils literal notranslate"><span class="pre">Standardizer.parent</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.Standardizer.scope"><code class="docutils literal notranslate"><span class="pre">Standardizer.scope</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#jaxili.compressor.Standardizer.std"><code class="docutils literal notranslate"><span class="pre">Standardizer.std</span></code></a></li>
 </ul>
 </li>
 </ul>
